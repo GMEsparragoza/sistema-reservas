@@ -1,3 +1,4 @@
+import Navbar from "@/components/navbar/navbar";
 import "./globals.css"
 import { PageContextProvider } from "@/utils/Context"
 
@@ -11,7 +12,8 @@ export default function RootLayout({ children }) {
     <html lang="es">
       <body>
       <PageContextProvider>
-        {children}
+        <Navbar/>
+        <main>{children}</main>
       </PageContextProvider>
       </body>
     </html>

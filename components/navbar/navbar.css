@@ -1,0 +1,72 @@
+.navbar{
+    height: 10vh;
+    width: 100%;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav{
+    width: 70%;
+    max-width: 400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.emailButton{
+    min-width: 70px;
+    margin-right: 20px;
+    padding: 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.emailSection{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    font-size: 1.1rem;
+    background-color: rgba(0, 0, 0, 0.455);
+}
+
+.emailSection *{
+    margin: 7px 0;
+}
+
+.emailBox{
+    background-color: white;
+    margin: auto;
+    border: solid 2px black;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+}
+
+.emailBox i{
+    margin: 0;
+}
+
+.inputEmail{
+    background-color: lightgrey;
+    padding: 7px;
+    width: calc(100% - 12px);
+    font-size: .9rem;
+    border-radius: 3px;
+}
+
+.changeEmail{
+    padding: 7px;
+    display: block;
+    margin: auto;
+    margin-top: 7px;
+    border-radius: 3px;
+    background-color: black;
+    color: white;
+    font-size: 1rem;
+    border: solid 2px black;
+}
