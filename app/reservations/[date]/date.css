@@ -1,0 +1,70 @@
+.reservation-page {
+    padding: 20px;
+    background-color: #121212;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.hours-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.hour-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #1e1e1e;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.hour {
+    font-size: 1rem;
+    font-weight: bold;
+    flex: 1;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.room-button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #2a2a2a;
+    border: 2px solid #2a2a2a;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.room-button:hover {
+    background-color: #2d4b73;
+    border-color: #2d4b73;
+}
+
+.room-button:disabled {
+    background-color: #3d3d3d;
+    color: #999999;
+    cursor: not-allowed;
+}
+
+.room-button.reserved {
+    background-color: #571a1a;
+    border-color: #571a1a;
+    color: #ffffff;
+    cursor: not-allowed;
+}

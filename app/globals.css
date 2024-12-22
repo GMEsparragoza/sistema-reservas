@@ -24,3 +24,7 @@ input:focus-visible{
 .vanish{
     display: none;
 }
+
+.no-scroll {
+    overflow: hidden;
+}

@@ -1,7 +1,14 @@
 import React from 'react'
+import ReservationByDate from './reservationByDate'
 
-export default function page() {
+const page = ({params}) => {
+  const {date} = params;
+  
   return (
-    <></>
+    <>
+      <ReservationByDate date={date}/>
+    </>
   )
 }
+
+export default page
