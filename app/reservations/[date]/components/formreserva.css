@@ -1,0 +1,86 @@
+
+.formSection{
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    font-size: 1.1rem;
+    background-color: rgba(0, 0, 0, 0.455);
+    top: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.formSection *{
+    margin: 7px 0;
+}
+
+.formFather{
+    margin: auto;
+    flex-direction: column;
+    width: 90%;
+
+}
+
+.formBox{
+    background-color: white;
+    margin: auto;
+    border: solid 2px black;
+    padding: 20px;
+    border-radius: 5px;
+    width: 700px;
+    height: 350px;
+    align-items: center;
+    display: flex;
+}
+
+.formBox i{
+    margin: 0;
+}
+
+.inputTitle{
+    background-color: lightgrey;
+    padding: 7px;
+    width: calc(100% - 12px);
+    font-size: 1.5rem;
+    border-radius: 3px;
+}
+
+.textForm {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.submitButton {
+    display: flex;
+    justify-content: space-between;
+}
+
+.submitReserva {
+    padding: 10px 20px; /* Aumenta el espacio interno */
+    display: inline;
+    margin: 20px auto; /* Espaciado mejorado */
+    border-radius: 50px; /* Bordes redondeados */
+    background-color: #333; /* Color de fondo oscuro, gris oscuro */
+    color: #fff; /* Texto blanco para buen contraste */
+    font-size: 1rem;
+    font-weight: 600; /* Peso de la fuente */
+    border: none; /* Elimina borde */
+    cursor: pointer; /* Cursor en forma de puntero */
+    box-shadow: 0 4px 6px rgba(51, 51, 51, 0.3); /* Sombra suave y discreta */
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+/* Efecto de hover */
+.submitReserva:hover {
+    background-color: #444; /* Un gris oscuro más suave al pasar el mouse */
+    box-shadow: 0 6px 12px rgba(51, 51, 51, 0.5); /* Sombra más pronunciada */
+}
+
+/* Efecto de foco (cuando el botón está seleccionado) */
+.submitReserva:focus {
+    outline: none; /* Eliminar borde de enfoque predeterminado */
+    box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.7); /* Resaltar el botón con un borde suave */
+}
+

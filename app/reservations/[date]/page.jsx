@@ -1,7 +1,14 @@
 import React from 'react'
+import ReservationByDate from './components/reservationByDate'
 
-export default function page() {
+const page = async ({params}) => {
+  const {date} = await params;
+  
   return (
-    <></>
+    <>
+      <ReservationByDate date={date}/>
+    </>
   )
 }
+
+export default page

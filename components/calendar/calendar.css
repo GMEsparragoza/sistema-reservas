@@ -1,0 +1,53 @@
+.calendar{
+    display: grid;
+    grid-template-columns: repeat(7, 90px);
+    width: 80%;
+    max-width: 630px;
+    margin: auto;
+    grid-template-rows: 50px repeat(6, 80px);
+    border: solid 1px black;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.day{
+    font-size: 1.7rem;
+    font-weight: 600;
+    border: solid 1px black;
+    padding: 10px;
+    display: flex;
+    align-items:start;
+    justify-content: space-between;
+}
+
+.dayname{
+    justify-content: center;
+    border: solid 2px black;
+}
+
+.day i{
+    font-size: 30px;
+}
+
+.move{
+    display: flex;
+    width: 630px;
+    margin: auto;
+    align-items: center;
+    font-size: 3rem;
+    justify-content: space-between;
+}
+
+.move i:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+    color: #1a2a43;
+}
+
+.red{
+    color: darkred;
+}
+
+.black{
+    color: black
+}

@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Ital', sans-serif;
+    transition: all .3s;
+}
+
+body{
+    background-color: lightgray;
+}
+
+a{
+    color: black;
+}
+
+input{
+    border: none;
+}
+
+input:focus-visible{
+    outline: none;
+}
+
+.link{
+    color: white;
+    font-weight: 600;
+}
+
+.vanish{
+    display: none;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
