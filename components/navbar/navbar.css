@@ -1,4 +1,4 @@
-.navbar{
+.navbar {
     height: 10vh;
     width: 100%;
     background-color: #222;
@@ -16,67 +16,95 @@
     align-items: center;
 }
 
-.logo{
-    width: 150px;
-    height: auto;
+.logo {
+    width: auto;
+    height: 80%;
     border-radius: 3px;
     margin-left: 20px;
 }
 
 .link {
-    padding: 8px 16px; /* Añade más espacio alrededor del texto */
+    padding: 8px 16px;
+    /* Añade más espacio alrededor del texto */
     font-size: 1rem;
-    font-weight: 600; /* No tan grueso como el de emailButton */
-    color: #e1e1e1; /* Texto gris claro para mejor visibilidad sobre fondo negro */
-    background-color: transparent; /* Fondo transparente */
-    border: 2px solid transparent; /* Sin borde visible por defecto */
-    border-radius: 4px; /* Bordes suaves */
-    text-decoration: none; /* Elimina subrayado */
-    transition: all 0.3s ease; /* Transición suave para los cambios */
-    cursor: pointer; /* Cursor de puntero */
+    font-weight: 600;
+    /* No tan grueso como el de emailButton */
+    color: #e1e1e1;
+    /* Texto gris claro para mejor visibilidad sobre fondo negro */
+    background-color: transparent;
+    /* Fondo transparente */
+    border: 2px solid transparent;
+    /* Sin borde visible por defecto */
+    border-radius: 4px;
+    /* Bordes suaves */
+    text-decoration: none;
+    /* Elimina subrayado */
+    transition: all 0.3s ease;
+    /* Transición suave para los cambios */
+    cursor: pointer;
+    /* Cursor de puntero */
 }
 
 .link:hover {
-    color: #fff; /* Texto blanco al pasar el mouse */
-    background-color: #1a2a43; /* Azul muy oscuro para el hover */
-    border-color: #1a2a43; /* Resalta el borde con el mismo color */
+    color: #fff;
+    /* Texto blanco al pasar el mouse */
+    background-color: #1a2a43;
+    /* Azul muy oscuro para el hover */
+    border-color: #1a2a43;
+    /* Resalta el borde con el mismo color */
 }
 
 .link:focus {
-    outline: none; /* Elimina el borde de enfoque predeterminado */
-    box-shadow: 0 0 0 3px rgba(26, 42, 67, 0.6); /* Resalta con sombra azul más oscuro */
+    outline: none;
+    /* Elimina el borde de enfoque predeterminado */
+    box-shadow: 0 0 0 3px rgba(26, 42, 67, 0.6);
+    /* Resalta con sombra azul más oscuro */
 }
 
 .emailButton {
     min-width: 100px;
     margin-right: 20px;
-    padding: 8px 20px; /* Más espacio para el texto */
-    background-color: #0a1a2a; /* Azul muy oscuro casi negro */
-    color: #fff; /* Texto blanco */
-    font-weight: 700; /* Font weight más fuerte para destacarse */
-    border-radius: 30px; /* Bordes redondeados para hacerlo más moderno */
-    border: none; /* Sin borde */
-    cursor: pointer; /* Cursor de puntero */
-    transition: all 0.3s ease; /* Transición suave para cambios */
+    padding: 8px 20px;
+    /* Más espacio para el texto */
+    background-color: #0a1a2a;
+    /* Azul muy oscuro casi negro */
+    color: #fff;
+    /* Texto blanco */
+    font-weight: 700;
+    /* Font weight más fuerte para destacarse */
+    border-radius: 30px;
+    /* Bordes redondeados para hacerlo más moderno */
+    border: none;
+    /* Sin borde */
+    cursor: pointer;
+    /* Cursor de puntero */
+    transition: all 0.3s ease;
+    /* Transición suave para cambios */
 }
 
 .emailButton:hover {
-    background-color: #132d44; /* Azul un poco más claro al pasar el cursor */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Sombra sutil para dar profundidad */
+    background-color: #132d44;
+    /* Azul un poco más claro al pasar el cursor */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    /* Sombra sutil para dar profundidad */
 }
 
 .emailButton:focus {
-    outline: none; /* Elimina borde de enfoque predeterminado */
-    box-shadow: 0 0 0 3px rgba(19, 45, 68, 0.7); /* Resalta con sombra azul más oscura */
+    outline: none;
+    /* Elimina borde de enfoque predeterminado */
+    box-shadow: 0 0 0 3px rgba(19, 45, 68, 0.7);
+    /* Resalta con sombra azul más oscura */
 }
 
 .emailButton:disabled {
-    background-color: #2c3e50; /* Gris oscuro para indicar que el botón está deshabilitado */
-    cursor: not-allowed; /* Cursor no permitido */
+    background-color: #2c3e50;
+    /* Gris oscuro para indicar que el botón está deshabilitado */
+    cursor: not-allowed;
+    /* Cursor no permitido */
 }
 
 
-.emailSection{
+.emailSection {
     position: fixed;
     top: 0;
     display: flex;
@@ -87,11 +115,11 @@
     background-color: rgba(0, 0, 0, 0.455);
 }
 
-.emailSection *{
+.emailSection * {
     margin: 7px 0;
 }
 
-.emailBox{
+.emailBox {
     background-color: white;
     margin: auto;
     border: solid 2px black;
@@ -100,16 +128,16 @@
     width: 400px;
 }
 
-.emailBox i{
+.emailBox i {
     margin: 0;
     cursor: pointer;
 }
 
-.emailBox i:hover{
+.emailBox i:hover {
     transform: scale(1.2);
 }
 
-.inputEmail{
+.inputEmail {
     background-color: lightgrey;
     padding: 7px;
     width: calc(100% - 12px);
@@ -118,28 +146,42 @@
 }
 
 .changeEmail {
-    padding: 10px 20px; /* Aumenta el espacio interno */
+    padding: 10px 20px;
+    /* Aumenta el espacio interno */
     display: block;
-    margin: 20px auto; /* Espaciado mejorado */
-    border-radius: 50px; /* Bordes redondeados */
-    background-color: #333; /* Color de fondo oscuro, gris oscuro */
-    color: #fff; /* Texto blanco para buen contraste */
+    margin: 20px auto;
+    /* Espaciado mejorado */
+    border-radius: 50px;
+    /* Bordes redondeados */
+    background-color: #333;
+    /* Color de fondo oscuro, gris oscuro */
+    color: #fff;
+    /* Texto blanco para buen contraste */
     font-size: 1rem;
-    font-weight: 600; /* Peso de la fuente */
-    border: none; /* Elimina borde */
-    cursor: pointer; /* Cursor en forma de puntero */
-    box-shadow: 0 4px 6px rgba(51, 51, 51, 0.3); /* Sombra suave y discreta */
-    transition: all 0.3s ease; /* Transición suave */
+    font-weight: 600;
+    /* Peso de la fuente */
+    border: none;
+    /* Elimina borde */
+    cursor: pointer;
+    /* Cursor en forma de puntero */
+    box-shadow: 0 4px 6px rgba(51, 51, 51, 0.3);
+    /* Sombra suave y discreta */
+    transition: all 0.3s ease;
+    /* Transición suave */
 }
 
 /* Efecto de hover */
 .changeEmail:hover {
-    background-color: #444; /* Un gris oscuro más suave al pasar el mouse */
-    box-shadow: 0 6px 12px rgba(51, 51, 51, 0.5); /* Sombra más pronunciada */
+    background-color: #444;
+    /* Un gris oscuro más suave al pasar el mouse */
+    box-shadow: 0 6px 12px rgba(51, 51, 51, 0.5);
+    /* Sombra más pronunciada */
 }
 
 /* Efecto de foco (cuando el botón está seleccionado) */
 .changeEmail:focus {
-    outline: none; /* Eliminar borde de enfoque predeterminado */
-    box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.7); /* Resaltar el botón con un borde suave */
+    outline: none;
+    /* Eliminar borde de enfoque predeterminado */
+    box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.7);
+    /* Resaltar el botón con un borde suave */
 }

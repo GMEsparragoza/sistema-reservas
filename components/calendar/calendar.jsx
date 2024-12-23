@@ -8,14 +8,12 @@ import Link from 'next/link';
 export default function Calendar() {
 
   const today = new Date();
-  today.setHours(0,0,0,0);
-  
 
   const [monthShowed, setMonthShowed] = useState(today.getMonth() + 1);
   const [yearShowed, setYearShowed] = useState(today.getFullYear());
 
   const getHrefByDayAndMonth = (day, month) => {
-    
+
     let dayString = day <= 9 ? `0${day}` : `${day}`;
     let monthString = month <= 9 ? `0${month}` : `${month}`;
 
@@ -48,8 +46,6 @@ export default function Calendar() {
       setReservationDays(await getDaysWithReservations(monthShowed, yearShowed));
     }
     UpdateReservations();
-    console.log(yearShowed);
-    console.log(monthShowed);
   }, [monthShowed]);
 
   const totalDays = (new Date(yearShowed, monthShowed, 0)).getDate() - 1;
@@ -64,19 +60,23 @@ export default function Calendar() {
       days.push(<div className="day"></div>)
     }
     else {
-      if (reservationDays[i - dayOne] == true) {
-        days.push(<Link href={getHrefByDayAndMonth(i - dayOne + 1, monthShowed)} className="day" key={i}>{i - dayOne + 1} <i className={`bx bxs-circle ${ (today > (new Date(yearShowed, monthShowed - 1, i - dayOne + 1)).setHours(0,0,0,0)) ? "black" : "red" }`}></i></Link>)
+      if (reservationDays[i - dayOne] > 0) {
+        days.push(<Link href={getHrefByDayAndMonth(i - dayOne + 1, monthShowed)} className="day able" key={i}>{i - dayOne + 1} <i className={`bx bxs-circle ${(reservationDays[i - dayOne] === 1) ? "black" : "red"}`}></i></Link>)
       }
       else {
-        days.push(<Link href={getHrefByDayAndMonth(i - dayOne + 1, monthShowed)} className="day" key={i}>{i - dayOne + 1}</Link>)
+        days.push(<Link href={getHrefByDayAndMonth(i - dayOne + 1, monthShowed)} className="day able" key={i}>{i - dayOne + 1}</Link>)
       }
     }
   }
 
   return (
     <>
-      <h1 className="title">Calendario - {yearShowed} - {(new Date(yearShowed, monthShowed - 1, 1)).toLocaleDateString("es-ES", { month: "long" }).charAt(0).toUpperCase() + (new Date(yearShowed, monthShowed - 1, 1)).toLocaleDateString("es-ES", { month: "long" }).slice(1) }</h1>
-      <ul className='calendar' key="calendar">
+      <h1 className="calendarTitle">Calendario - {yearShowed} - {(new Date(yearShowed, monthShowed - 1, 1)).toLocaleDateString("es-ES", { month: "long" }).charAt(0).toUpperCase() + (new Date(yearShowed, monthShowed - 1, 1)).toLocaleDateString("es-ES", { month: "long" }).slice(1)}</h1>
+
+
+      <div className="calendarContainer">
+        <i className="bx bx-chevron-left arrow" onClick={() => HandleMonthChange(false)}></i>
+        <ul className='calendar' key="calendar">
           <li key="D" className="day dayname">D</li>
           <li key="L" className="day dayname">L</li>
           <li key="M" className="day dayname">M</li>
@@ -86,9 +86,7 @@ export default function Calendar() {
           <li key="S" className="day dayname">S</li>
           {days}
         </ul>
-      <div className="move">
-        <i className="bx bx-chevron-left" onClick={() => HandleMonthChange(false)}></i>
-        <i className="bx bx-chevron-right" onClick={() => HandleMonthChange(true)}></i>
+        <i className="bx bx-chevron-right arrow" onClick={() => HandleMonthChange(true)}></i>
       </div>
     </>
   )

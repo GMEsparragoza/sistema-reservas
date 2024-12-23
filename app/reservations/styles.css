@@ -1,6 +1,6 @@
-.title{
+.calendarTitle{
     font-size: 2rem;
     text-align: center;
-    margin: 2.5vh 0;
+    margin: 6.5vh auto 3vh auto;
     color: #333;
 }

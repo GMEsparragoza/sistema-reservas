@@ -1,9 +1,16 @@
+.calendarContainer{
+    width: 60%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
 .calendar{
     display: grid;
     grid-template-columns: repeat(7, 90px);
-    width: 80%;
+    width: 100%;
     max-width: 630px;
-    margin: auto;
     grid-template-rows: 50px repeat(6, 80px);
     border: solid 1px black;
     border-radius: 5px;
@@ -20,28 +27,32 @@
     justify-content: space-between;
 }
 
+.able:hover{
+    background-color: #1a2a43;
+    color: #e1e1e1;
+}
+
 .dayname{
     justify-content: center;
-    border: solid 2px black;
+    background-color: #222;
+    color: #e1e1e1;
+    border: solid 2px #222;
 }
 
 .day i{
     font-size: 30px;
 }
 
-.move{
-    display: flex;
-    width: 630px;
-    margin: auto;
-    align-items: center;
+.arrow{
     font-size: 3rem;
-    justify-content: space-between;
+    border-radius: 50%;
 }
 
-.move i:hover{
+.arrow:hover{
     cursor: pointer;
-    transform: scale(1.2);
-    color: #1a2a43;
+    transform: scale(1.1);
+    color: lightgray;
+    background-color: #222;
 }
 
 .red{

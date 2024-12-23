@@ -1,7 +1,7 @@
 "use client"
 
 import { useContext, createContext, useState, useEffect } from "react";
-import { getDoc, getDocs, collection, query, doc, limit, updateDoc } from "firebase/firestore"
+import { getDoc, getDocs, collection, query, doc, updateDoc, setDoc } from "firebase/firestore"
 import { firestore } from "@/firebase/config";
 
 const PageContext = createContext();
@@ -12,33 +12,77 @@ export const PageContextProvider = ({ children }) => {
     const [error, setError] = useState("");
     const [email, setEmail] = useState('');
 
+    const isValidEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const sendVerificationEmail = async (email, verificationCode) => {
+        const result = await fetch('/api/sendConfirmationEmail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                to: email,
+                subject: 'Verificación de correo',
+                html: `
+                    <p>Para confirmar tu correo electrónico, ingresa el siguiente código:</p>
+                    <h2>${verificationCode}</h2>
+                `,
+            }),
+        });
+        console.log(result);
+    };
+
+    const verifyEmail = async (newEmail) => {
+        setError("");
+        // Validar formato del correo
+        if (!isValidEmail(newEmail)) {
+            setError("El correo ingresado no tiene un formato válido.");
+            return;
+        }
+        //Mail de verificacion para validar la nueva direccion de correo electronico
+        const verificationCode = Math.floor(100000 + Math.random() * 900000); // Código de 6 dígitos
+        await sendVerificationEmail(newEmail, verificationCode);
+        return verificationCode;
+    }
+
     const updateEmail = async (newEmail) => {
-        setError("");  // Limpiar cualquier error previo
+        setError(""); // Limpiar cualquier error previo
+
         try {
-            // Obtener una referencia a la colección 'email' y limitar a 1 documento
-            const emailCollectionRef = collection(firestore, "email");
-            const q = query(emailCollectionRef, limit(1));
-    
-            // Obtener el primer documento de la colección
-            const querySnapshot = await getDocs(q);
-    
-            if (!querySnapshot.empty) {
-                // Tomamos el primer documento
-                const firstDoc = querySnapshot.docs[0];
-                const docRef = doc(firestore, "email", firstDoc.id); // Usamos el ID del primer documento
-    
-                // Actualizamos el campo 'email' en ese documento
-                await updateDoc(docRef, {
-                    email: newEmail
+            // Referencia al documento específico con ID "0" en la colección 'email'
+            const emailDocRef = doc(firestore, "email", "0");
+        
+            // Verificar si el documento existe
+            const docSnapshot = await getDoc(emailDocRef);
+        
+            if (docSnapshot.exists()) {
+                // Si el documento existe, actualizar el email
+                await updateDoc(emailDocRef, {
+                    email: newEmail,
+                    updatedAt: new Date(), // Opcional: Timestamp de actualización
                 });
-    
+        
                 console.log("Email actualizado correctamente.");
             } else {
-                setError("No se encontró el documento para actualizar.");
-                console.error("No se encontró ningún documento en la colección 'email'.");
+                // Si el documento no existe, crearlo con el ID "0"
+                await setDoc(emailDocRef, {
+                    email: newEmail,
+                    createdAt: new Date(), // Timestamp de creación
+                });
+        
+                console.log("Email insertado correctamente.");
             }
         } catch (error) {
-            setError("Error al actualizar el email.");
+            if (error.code === "permission-denied") {
+                setError("No tienes permiso para acceder o modificar los datos.");
+            } else if (error.code === "unavailable") {
+                setError("El servicio de Firestore no está disponible. Inténtalo más tarde.");
+            } else {
+                setError("Error al interactuar con la base de datos.");
+            }
             console.error("Error:", error);
         }
     }
@@ -52,11 +96,10 @@ export const PageContextProvider = ({ children }) => {
 
                 const userData = userSnap.data();
                 // Verifica que userData.email sea una cadena antes de usarla
-                if (typeof userData.email === "string" && userSnap.exists()) {
+                if (userSnap.exists()) {
                     setEmail(userData.email);
                 } else {
-                    setEmail(""); // Si no es una cadena, establecemos un valor vacío
-                    console.error("El valor de 'email' no es una cadena válida.");
+                    setEmail("No hay email Registrado"); // Si no es una cadena, establecemos un valor vacío
                 }
 
             } catch (error) {
@@ -100,7 +143,7 @@ export const PageContextProvider = ({ children }) => {
     }, []);
 
     return (
-        <PageContext.Provider value={{ loading, error, meetings, email, updateEmail }}>
+        <PageContext.Provider value={{ loading, error, meetings, email, updateEmail, verifyEmail }}>
             {children}
         </PageContext.Provider>
     );
