@@ -4,6 +4,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 export const getReservations = async () => {
 
     const now = new Date();
+    now.setHours(now.getHours() - 3); // Resta 3 horas para ajustarlo a UTC-3
 
     const reservationsQuery = query(
         collection(firestore, "reservas"),
