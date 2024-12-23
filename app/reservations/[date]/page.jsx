@@ -1,8 +1,8 @@
 import React from 'react'
-import ReservationByDate from './reservationByDate'
+import ReservationByDate from './components/reservationByDate'
 
-const page = ({params}) => {
-  const {date} = params;
+const page = async ({params}) => {
+  const {date} = await params;
   
   return (
     <>

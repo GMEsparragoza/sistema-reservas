@@ -62,9 +62,18 @@ h1 {
     cursor: not-allowed;
 }
 
+/* Clase para botones reservados */
 .room-button.reserved {
-    background-color: #571a1a;
+    background-color: #0f1725; /* Azul oscuro */
+    border-color: #0f1725;
+    color: white;
+    cursor: not-allowed;
+}
+
+/* Clase para botones expirados (hora pasada) */
+.room-button.expired {
+    background-color: #571a1a; /* Color rojo para expirados */
     border-color: #571a1a;
-    color: #ffffff;
+    color: white;
     cursor: not-allowed;
 }
