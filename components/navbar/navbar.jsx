@@ -35,7 +35,7 @@ export default function Navbar(){
         </div>
       </div>
       <nav className="navbar">
-        <div className="logo"></div>
+      <img src="/DomeBusinessPlaza.png" alt="Dome" className="logo"/>
         <div className="nav">
           <Link className="link" href={"/"}>Inicio</Link>
           <Link className="link" href={"/reservations"}>Reservar</Link>

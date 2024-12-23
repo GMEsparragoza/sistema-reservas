@@ -6,6 +6,15 @@
     list-style: none;
     text-decoration: none;
     font-family: 'Ital', sans-serif;
+    transition: all .3s;
+}
+
+body{
+    background-color: lightgray;
+}
+
+a{
+    color: black;
 }
 
 input{

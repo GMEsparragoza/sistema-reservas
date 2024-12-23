@@ -1,21 +1,18 @@
-"use client"
 
 import React from 'react'
 import "./index.css"
 import Link from 'next/link';
-import { PageUse } from "@/utils/Context"
+import { getReservations } from '@/firebase/getReservas';
+
+const meetings = await getReservations();
 
 export default function page() {
-    const { loading, error, meetings } = PageUse();
-
-
-
-    if (loading) {
-        return <p>Cargando reuniones...</p>;
-    }
 
     return (
         <>
+            <div className="welcomeImg">
+                <div className="welcome"></div>
+            </div>
             <div className="container">
                 <h1 className="title">Próximas Reuniones</h1>
                 {meetings.length > 0 ? (
@@ -24,9 +21,9 @@ export default function page() {
                             <li key={id} className="card">
                                 <h2 className="meetingTitle">{meeting.title}</h2>
                                 <p className="meetingInfo">
-                                    Fecha: {meeting.date} <br />
-                                    Hora: {meeting.time} <br />
-                                    Sala: {meeting.room}
+                                    <b>Fecha:</b> {meeting.date}<br />
+                                    <b>Hora:</b> {meeting.time} <br />
+                                    <b>Sala:</b> {meeting.room}
                                 </p>
                             </li>
                         ))}
@@ -41,8 +38,8 @@ export default function page() {
                         </Link>
                     </div>
                 )}
-                {error && <p style={{color:"red"}}>{error}</p>}
             </div>
+
         </>
     )
 }
