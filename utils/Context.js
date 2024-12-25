@@ -8,7 +8,6 @@ const PageContext = createContext();
 
 export const PageContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
-    const [meetings, setMeetings] = useState([]);
     const [error, setError] = useState("");
     const [email, setEmail] = useState('');
 
@@ -54,17 +53,17 @@ export const PageContextProvider = ({ children }) => {
         try {
             // Referencia al documento específico con ID "0" en la colección 'email'
             const emailDocRef = doc(firestore, "email", "0");
-        
+
             // Verificar si el documento existe
             const docSnapshot = await getDoc(emailDocRef);
-        
+
             if (docSnapshot.exists()) {
                 // Si el documento existe, actualizar el email
                 await updateDoc(emailDocRef, {
                     email: newEmail,
                     updatedAt: new Date(), // Opcional: Timestamp de actualización
                 });
-        
+
                 console.log("Email actualizado correctamente.");
             } else {
                 // Si el documento no existe, crearlo con el ID "0"
@@ -72,7 +71,7 @@ export const PageContextProvider = ({ children }) => {
                     email: newEmail,
                     createdAt: new Date(), // Timestamp de creación
                 });
-        
+
                 console.log("Email insertado correctamente.");
             }
         } catch (error) {
@@ -107,43 +106,11 @@ export const PageContextProvider = ({ children }) => {
             }
         }
 
-        async function fetchReservations() {
-            setError("");
-            setLoading(true);
-            try {
-                const reservationsQuery = query(
-                    collection(firestore, 'reservas')
-                );
-                const reservationsSnap = await getDocs(reservationsQuery);
-
-                const reservations = [];
-                reservationsSnap.forEach((doc) => {
-                    const fecha = doc.data().date.toDate(); // Convierte el Timestamp a un objeto Date
-                    const formattedDate = fecha.toLocaleDateString();
-                    const formattedTime = fecha.toLocaleTimeString();
-                    reservations.push({
-                        id: doc.id,
-                        room: doc.data().room,
-                        title: doc.data().title,
-                        date: formattedDate,
-                        time: formattedTime
-                    });
-                });
-                setMeetings(reservations);
-            } catch (err) {
-                console.error(err)
-                setLoading(false);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchReservations();
         getEmail();
     }, []);
 
     return (
-        <PageContext.Provider value={{ loading, error, meetings, email, updateEmail, verifyEmail }}>
+        <PageContext.Provider value={{ loading, error, email, updateEmail, verifyEmail }}>
             {children}
         </PageContext.Provider>
     );
