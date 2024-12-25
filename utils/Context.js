@@ -28,7 +28,7 @@ export const PageContextProvider = ({ children }) => {
                 subject: 'Verificación de correo',
                 html: `
                     <p>Para confirmar tu correo electrónico, ingresa el siguiente código:</p>
-                    <h2>${verificationCode}</h2>
+                    <h2><b>${verificationCode}</b></h2>
                 `,
             }),
         });

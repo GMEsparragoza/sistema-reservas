@@ -9,12 +9,14 @@ import { handleSendEmail } from './send-email';
 import './date.css'; // Archivo CSS para estilos
 import './formreserva.css'
 import { DateTime } from "luxon";
+import { deleteReservation } from '@/firebase/deleteReservation';
 
 export default function ReservationByDate({ date }) {
     const [reservations, setReservations] = useState([]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [formReserva, setFormReserva] = useState(false);
+    const [formCancel, setFormCancel] = useState(false);
     const [title, setTitle] = useState("");
     const [formHour, setFormHour] = useState("");
     const [formRoom, setFormRoom] = useState(0);
@@ -28,6 +30,12 @@ export default function ReservationByDate({ date }) {
         setFormRoom(room);
     }
 
+    const HandleFormDelete = (hour, room) => {
+        setFormCancel(!formCancel);
+        setFormHour(hour);
+        setFormRoom(room);
+    }
+
     const submitReserva = async () => {
         setLoading(true);
         setMessage("");
@@ -35,6 +43,17 @@ export default function ReservationByDate({ date }) {
         await handleSendEmail(title, date, formHour, formRoom, email);
         setLoading(false);
         setMessage("Reserva creada con exito");
+        setTimeout(() => {
+            window.location.reload(); // Recarga la página
+        }, 500); // 500ms = 0.5 segundos
+    }
+
+    const cancelReservation = async () => {
+        setLoading(true);
+        setMessage("");
+        await deleteReservation(date, formHour, formRoom);
+        setLoading(false);
+        setMessage("Reserva eliminada con exito");
         setTimeout(() => {
             window.location.reload(); // Recarga la página
         }, 500); // 500ms = 0.5 segundos
@@ -116,6 +135,24 @@ export default function ReservationByDate({ date }) {
                     </div>
                 </div>
             </div>
+            <div className={`${formCancel ? "formSection no-scroll " : "vanish"}`}>
+                <div className="formBox">
+                    <div className="formFather">
+                        <div className="textForm"><b>Desea cancelar la reunion?</b></div>
+                        <div className="textForm">Fecha: {date}</div>
+                        <div className="textForm">Hora: {formHour}</div>
+                        <div className="textForm">Sala: {formRoom}</div>
+                        <div className="submitButton">
+                            <button className="submitReserva" onClick={() => {
+                                HandleFormDelete("", 0);
+                            }}>Cancelar</button>
+                            <button className="submitReserva" onClick={() => cancelReservation()}>Aceptar</button>
+                        </div>
+                        {loading && <p style={{ color: "black" }}><i className='bx bx-loader-alt bx-spin' ></i> Guardando Reserva...</p>}
+                        {message && <p style={{ color: "green" }}>{message}</p>}
+                    </div>
+                </div>
+            </div>
             <div className="reservation-page">
                 <h1 className="reservationsTitle">Reservas para el {date}</h1>
                 {error && <p style={{ color: "red" }}>{error}</p>}
@@ -150,15 +187,35 @@ export default function ReservationByDate({ date }) {
                                 <div className="buttons">
                                     <button
                                         className={`room-button ${room1ButtonClass}`}
-                                        disabled={room1Reserved || isExpired}
-                                        onClick={() => HandleFormReserva(hour, 1)}
+                                        disabled={isExpired}
+                                        onClick={() => {
+                                            if (room1ButtonClass === 'expired') {
+                                                return;
+                                            }
+                                            if (room1ButtonClass === 'reserved') {
+                                                HandleFormDelete(hour, 1);
+                                            } else {
+                                                HandleFormReserva(hour, 1);
+                                            }
+                                        }}
                                     >
                                         Sala 1
                                     </button>
                                     <button
                                         className={`room-button ${room2ButtonClass}`}
-                                        disabled={room2Reserved || isExpired}
-                                        onClick={() => HandleFormReserva(hour, 2)}
+                                        disabled={isExpired}
+                                        onClick={() => {
+                                            if (room2ButtonClass === 'expired') {
+                                                return;
+                                            }
+                                            if (room2ButtonClass === 'reserved') {
+                                                console.error("beibitueremala");
+                                                HandleFormDelete(hour, 2);
+                                            } else {
+                                                HandleFormReserva(hour, 2);
+                                                console.error("ai");
+                                            }
+                                        }}
                                     >
                                         Sala 2
                                     </button>

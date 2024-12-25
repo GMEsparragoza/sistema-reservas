@@ -73,7 +73,7 @@
     /* Azul oscuro */
     border-color: #142642;
     color: white;
-    cursor: not-allowed;
+    cursor: pointer;
 }
 
 /* Clase para botones expirados (hora pasada) */
