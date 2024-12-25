@@ -8,6 +8,7 @@ import { PageUse } from '@/utils/Context';
 import { handleSendEmail } from './send-email';
 import './date.css'; // Archivo CSS para estilos
 import './formreserva.css'
+import { DateTime } from "luxon";
 
 export default function ReservationByDate({ date }) {
     const [reservations, setReservations] = useState([]);
@@ -18,6 +19,7 @@ export default function ReservationByDate({ date }) {
     const [formHour, setFormHour] = useState("");
     const [formRoom, setFormRoom] = useState(0);
     const [message, setMessage] = useState("");
+    const [formattedTime, setFormattedTime] = useState("");
     const { email } = PageUse();
 
     const HandleFormReserva = (hour, room) => {
@@ -40,9 +42,13 @@ export default function ReservationByDate({ date }) {
 
     // Simula la obtención de datos desde Firebase (lógica real por implementar)
     useEffect(() => {
+        const argentinaTime = DateTime.now().setZone("America/Argentina/Buenos_Aires");
+        setFormattedTime(argentinaTime);
+
         const fetchReservations = async () => {
             setError("");
             setLoading(true);
+            setReservations([]);
             try {
                 const correctedDate = date.split('-').reverse().join('-'); // Convierte 'DD-MM-YYYY' a 'YYYY-MM-DD'
                 // Dividir y construir la fecha en UTC
@@ -128,12 +134,11 @@ export default function ReservationByDate({ date }) {
                             res => res.hour === hour && res.room == '2'
                         );
 
-                        // Obtener la fecha y hora actual
-                        const now = new Date(); // Fecha y hora actual
+
                         const buttonDate = new Date(year, month - 1, day, index, 0); // Crear un Date para comparar con la fecha actual
 
                         // Verificar si la fecha-hora del botón ya pasó en relación con la fecha y hora actual
-                        const isExpired = buttonDate < now; // Si la fecha-hora es menor a la fecha actual, está expirado
+                        const isExpired = buttonDate < formattedTime; // Si la fecha-hora es menor a la fecha actual, está expirado
 
                         // Lógica para las clases
                         const room1ButtonClass = room1Reserved ? 'reserved' : isExpired ? 'expired' : '';
