@@ -1,64 +1,129 @@
-.calendarContainer{
-    width: 60%;
+.calendarContainer {
+    width: 60%; /* Mantener el tamaño inicial */
     margin: auto;
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
 
-.calendar{
+.calendar {
     display: grid;
-    grid-template-columns: repeat(7, 90px);
+    grid-template-columns: repeat(7, 1fr); /* Mantener siempre 7 columnas */
     width: 100%;
-    max-width: 630px;
-    grid-template-rows: 50px repeat(6, 80px);
+    max-width: 630px; /* Tamaño máximo para pantallas grandes */
+    grid-template-rows: 50px repeat(6, 80px); /* Mantener proporciones */
     border: solid 1px black;
     border-radius: 5px;
     background-color: #fff;
 }
 
-.day{
+.day {
     font-size: 1.7rem;
     font-weight: 600;
     border: solid 1px black;
     padding: 10px;
     display: flex;
-    align-items:start;
+    align-items: start;
     justify-content: space-between;
 }
 
-.able:hover{
+.able:hover {
     background-color: #1a2a43;
     color: #e1e1e1;
 }
 
-.dayname{
+.dayname {
     justify-content: center;
     background-color: #222;
     color: #e1e1e1;
     border: solid 2px #222;
 }
 
-.day i{
+.day i {
     font-size: 30px;
 }
 
-.arrow{
+.arrow {
     font-size: 3rem;
     border-radius: 50%;
 }
 
-.arrow:hover{
+.arrow:hover {
     cursor: pointer;
     transform: scale(1.1);
     color: lightgray;
     background-color: #222;
 }
 
-.red{
+.red {
     color: darkred;
 }
 
-.black{
-    color: black
+.black {
+    color: black;
+}
+
+/* Ajustes para dispositivos grandes intermedios */
+@media (max-width: 1050px) {
+    .calendarContainer {
+        width: 70%; /* Reducir ligeramente el ancho del contenedor */
+    }
+
+    .calendar {
+        max-width: 550px; /* Ajustar tamaño máximo del calendario */
+    }
+
+    .day {
+        font-size: 1.5rem; /* Reducir tamaño de fuente */
+        padding: 8px; /* Reducir padding */
+    }
+
+    .arrow {
+        font-size: 2.8rem; /* Reducir tamaño de las flechas */
+    }
+}
+
+/* Ajustes para dispositivos medianos */
+@media (max-width: 768px) {
+    .calendarContainer {
+        width: 80%; /* Ajustar contenedor */
+    }
+
+    .calendar {
+        max-width: 500px; /* Reducir tamaño máximo del calendario */
+    }
+
+    .day {
+        font-size: 1.4rem; /* Reducir tamaño de fuente */
+        padding: 8px; /* Reducir padding */
+    }
+
+    .arrow {
+        font-size: 2.5rem; /* Reducir tamaño de flechas */
+    }
+}
+
+/* Ajustes para dispositivos pequeños */
+@media (max-width: 480px) {
+    .calendarContainer {
+        width: 95%; /* Hacer que el contenedor ocupe casi todo el ancho */
+    }
+
+    .calendar {
+        max-width: 100%; /* Permitir que se ajuste completamente */
+        grid-template-rows: 50px repeat(6, 60px); /* Mantener proporciones */
+    }
+
+    .day {
+        font-size: 1.2rem; /* Reducir tamaño de fuente */
+        padding: 5px;
+    }
+
+    .day i {
+        display: none;
+    }
+
+    .arrow {
+        font-size: 2rem; /* Reducir tamaño de flechas */
+    }
 }

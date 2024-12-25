@@ -20,7 +20,7 @@ export default function Calendar() {
     return `/reservations/${dayString}-${monthString}-${yearShowed}`;
   }
 
-  const [reservationDays, setReservationDays] = useState(getDaysWithReservations(monthShowed, 2024));
+  const [reservationDays, setReservationDays] = useState(getDaysWithReservations(monthShowed, yearShowed));
 
   const HandleMonthChange = (plus) => {
     if (plus) {

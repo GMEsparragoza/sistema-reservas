@@ -7,7 +7,8 @@
 
 .welcome{
     border-radius: 15px;
-    width: 55%;
+    width: 90%;
+    max-width: 1000px;
     height: 100%;
     margin: auto;
     background:
@@ -86,4 +87,11 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+@media (max-width: 900px){
+    .welcomeImg{
+        height: 30vh;
+        padding-top: 5vh;
+    }
 }
