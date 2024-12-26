@@ -12,7 +12,11 @@ export default function page() {
             <div className="welcomeImg">
                 <div className="welcome"></div>
             </div>
-            <Reservations/>
+            <div className="parentContainer">
+                <div className="containerMain">
+                    <Reservations />
+                </div>
+            </div>
         </>
     )
 }

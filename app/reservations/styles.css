@@ -2,5 +2,13 @@
     font-size: 2rem;
     text-align: center;
     margin: 6.5vh auto 3vh auto;
-    color: #333;
+    color: #002396;
+}
+
+
+.bodyCalendar{
+    background-image: url("/DBPimg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat; /* No se repite */
+    height: 90vh;
 }

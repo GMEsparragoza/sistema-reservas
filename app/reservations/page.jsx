@@ -8,7 +8,9 @@ export default function Reservations(){
 
   return (
     <>
-      <Calendar/>
+      <div className="bodyCalendar">
+        <Calendar/>
+      </div>
     </>
   )
 }

@@ -5,7 +5,7 @@ import { getDocs, collection, query, where } from "firebase/firestore"
 import { firestore } from '@/firebase/config';
 import { guardarReserva } from '@/firebase/reservar';
 import { PageUse } from '@/utils/Context';
-import { handleSendEmail } from './send-email';
+import { handleSendEmail, handleDeleteEmail } from './send-email';
 import './date.css'; // Archivo CSS para estilos
 import './formreserva.css'
 import { DateTime } from "luxon";
@@ -52,6 +52,7 @@ export default function ReservationByDate({ date }) {
         setLoading(true);
         setMessage("");
         await deleteReservation(date, formHour, formRoom);
+        await handleDeleteEmail(date, formHour, formRoom, email);
         setLoading(false);
         setMessage("Reserva eliminada con exito");
         setTimeout(() => {
@@ -111,7 +112,7 @@ export default function ReservationByDate({ date }) {
             <div className={`${formReserva ? "formSection no-scroll " : "vanish"}`}>
                 <div className="formBox">
                     <div className="formFather">
-                        <div className="textForm"><b>Desea reservar una reunion?</b></div>
+                        <div className="textForm"><b>Desea reservar esta sala?</b></div>
                         <div className="textForm">Fecha: {date}</div>
                         <div className="textForm">Hora: {formHour}</div>
                         <div className="textForm">Sala: {formRoom}</div>
@@ -138,7 +139,7 @@ export default function ReservationByDate({ date }) {
             <div className={`${formCancel ? "formSection no-scroll " : "vanish"}`}>
                 <div className="formBox">
                     <div className="formFather">
-                        <div className="textForm"><b>Desea cancelar la reunion?</b></div>
+                        <div className="textForm"><b>Desea cancelar esta reserva?</b></div>
                         <div className="textForm">Fecha: {date}</div>
                         <div className="textForm">Hora: {formHour}</div>
                         <div className="textForm">Sala: {formRoom}</div>

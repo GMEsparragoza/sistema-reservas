@@ -71,22 +71,22 @@ export default function Calendar() {
 
   return (
     <>
-      <h1 className="calendarTitle">Calendario - {yearShowed} - {(new Date(yearShowed, monthShowed - 1, 1)).toLocaleDateString("es-ES", { month: "long" }).charAt(0).toUpperCase() + (new Date(yearShowed, monthShowed - 1, 1)).toLocaleDateString("es-ES", { month: "long" }).slice(1)}</h1>
-
-
-      <div className="calendarContainer">
-        <i className="bx bx-chevron-left arrow" onClick={() => HandleMonthChange(false)}></i>
-        <ul className='calendar' key="calendar">
-          <li key="D" className="day dayname">D</li>
-          <li key="L" className="day dayname">L</li>
-          <li key="M" className="day dayname">M</li>
-          <li key="X" className="day dayname">X</li>
-          <li key="J" className="day dayname">J</li>
-          <li key="V" className="day dayname">V</li>
-          <li key="S" className="day dayname">S</li>
-          {days}
-        </ul>
-        <i className="bx bx-chevron-right arrow" onClick={() => HandleMonthChange(true)}></i>
+      <div className="calendarMain">
+        <h1 className="calendarTitle">Calendario - {yearShowed} - {(new Date(yearShowed, monthShowed - 1, 1)).toLocaleDateString("es-ES", { month: "long" }).charAt(0).toUpperCase() + (new Date(yearShowed, monthShowed - 1, 1)).toLocaleDateString("es-ES", { month: "long" }).slice(1)}</h1>
+        <div className="calendarContainer">
+          <i className="bx bx-chevron-left arrow" onClick={() => HandleMonthChange(false)}></i>
+          <ul className='calendar' key="calendar">
+            <li key="D" className="day dayname">D</li>
+            <li key="L" className="day dayname">L</li>
+            <li key="M" className="day dayname">M</li>
+            <li key="X" className="day dayname">X</li>
+            <li key="J" className="day dayname">J</li>
+            <li key="V" className="day dayname">V</li>
+            <li key="S" className="day dayname">S</li>
+            {days}
+          </ul>
+          <i className="bx bx-chevron-right arrow" onClick={() => HandleMonthChange(true)}></i>
+        </div>
       </div>
     </>
   )

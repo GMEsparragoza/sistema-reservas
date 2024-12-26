@@ -1,9 +1,18 @@
+
+
 .calendarContainer {
     width: 60%; /* Mantener el tamaño inicial */
     margin: auto;
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+
+.calendarMain{
+    border-radius: 15px;
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px 0 40px 0;
 }
 
 .calendar {
@@ -44,14 +53,14 @@
 }
 
 .arrow {
-    font-size: 3rem;
+    font-size: 4rem;
     border-radius: 50%;
+    color: #002396;
 }
 
 .arrow:hover {
     cursor: pointer;
     transform: scale(1.1);
-    color: lightgray;
     background-color: #222;
 }
 
@@ -89,6 +98,8 @@
         width: 80%; /* Ajustar contenedor */
     }
 
+    .calendarMain
+
     .calendar {
         max-width: 500px; /* Reducir tamaño máximo del calendario */
     }
@@ -101,12 +112,21 @@
     .arrow {
         font-size: 2.5rem; /* Reducir tamaño de flechas */
     }
+
+    .arrow:hover {
+        cursor: pointer;
+        transform: scale(1.0);
+    }
 }
 
 /* Ajustes para dispositivos pequeños */
 @media (max-width: 480px) {
     .calendarContainer {
         width: 95%; /* Hacer que el contenedor ocupe casi todo el ancho */
+    }
+
+    .calendarMain{
+        width: 95%;
     }
 
     .calendar {
@@ -125,5 +145,9 @@
 
     .arrow {
         font-size: 2rem; /* Reducir tamaño de flechas */
+    }
+
+    .arrow:hover {
+        transform: scale(1.0);
     }
 }
