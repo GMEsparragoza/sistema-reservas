@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { PageUse } from '@/utils/Context'
-import { downloadExcel } from './downloadExcel'
+import { handleDownload } from './downloadExcel'
 
 import './navbar.css'
 
@@ -55,7 +55,7 @@ export default function Navbar() {
 
   const HandleExcelData = async () => {
     if(!excelData){
-      await downloadExcel();
+      await handleDownload();
       setSuccess("Excel descargado con exito");
     }
     setExcelData(!excelData);

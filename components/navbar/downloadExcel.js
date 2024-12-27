@@ -1,22 +1,21 @@
-export async function downloadExcel() {
+export const handleDownload = async () => {
     try {
-        const response = await fetch('/api/updateExcel', {
-            method: 'GET',
-        });
+        // Hacer una solicitud GET a la API para generar el archivo
+        const response = await fetch('/api/generarExcel');
 
         if (!response.ok) {
-            throw new Error('Error al descargar el archivo');
+            throw new Error('Error al generar el archivo');
         }
 
+        // Convertir la respuesta a un Blob
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
         link.download = 'reservas.xlsx'; // Nombre del archivo
         link.click();
-        window.URL.revokeObjectURL(url);
+        window.URL.revokeObjectURL(url); // Liberar el objeto URL
     } catch (error) {
-        console.error(error.message);
-        alert('No se pudo descargar el archivo.');
+        console.error('Error al descargar el archivo:', error);
     }
-}
+};

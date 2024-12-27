@@ -6,7 +6,6 @@ import { firestore } from '@/firebase/config';
 import { guardarReserva } from '@/firebase/reservar';
 import { PageUse } from '@/utils/Context';
 import { handleSendEmail, handleDeleteEmail } from './send-email';
-import { sendData, deleteData } from './data-excel';
 import { deleteReservation } from '@/firebase/deleteReservation';
 import './date.css'; // Archivo CSS para estilos
 import './formreserva.css'
@@ -49,7 +48,6 @@ export default function ReservationByDate({ date }) {
         setMessage("");
         await guardarReserva(description, formHour, date, formRoom, unidadFuncional, importe);
         await handleSendEmail(description, date, formHour, formRoom, unidadFuncional, importe, email);
-        await sendData(description, date, formHour, formRoom, unidadFuncional, importe);
         setLoading(false);
         setMessage("Reserva creada con exito");
         setTimeout(() => {
@@ -62,7 +60,6 @@ export default function ReservationByDate({ date }) {
         setMessage("");
         await deleteReservation(date, formHour, formRoom);
         await handleDeleteEmail(date, formHour, formRoom, desc, uf, email);
-        await deleteData(date, formHour, formRoom);
         setLoading(false);
         setMessage("Reserva eliminada con exito");
         setTimeout(() => {

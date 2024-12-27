@@ -1,5 +1,5 @@
 import { firestore } from "./config";
-import { collection, query, where, orderBy, limit, getDocs } from "firebase/firestore";
+import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
 
 export const getReservations = async () => {
     const reservations = [];
@@ -12,8 +12,7 @@ export const getReservations = async () => {
         const reservationsQuery = query(
             collection(firestore, "reservas"),
             where("date", ">=", now),
-            orderBy("date", "asc"), // Ordenar por fecha ascendente
-            limit(5) // Limitar a un máximo de 5 resultados
+            orderBy("date", "asc") // Ordenar por fecha ascendente
         );
 
         const reservationsSnap = await getDocs(reservationsQuery);
@@ -23,11 +22,12 @@ export const getReservations = async () => {
             const timestamp = data.date.toDate();
 
             reservations.push({
-                id: doc.id,
                 room: data.room,
-                title: data.title,
+                desc: data.description,
+                uf: data.uf,
+                importe: data.importe,
                 date: `${timestamp.getUTCDate().toString().padStart(2, '0')}-${(timestamp.getUTCMonth() + 1).toString().padStart(2, '0')}-${timestamp.getUTCFullYear()}`,
-                time: `${timestamp.getUTCHours().toString().padStart(2, '0')}:00`
+                hour: `${timestamp.getUTCHours().toString().padStart(2, '0')}:${(timestamp.getMinutes() == 0) ? "00" : "30"}`
             });
         });
     } catch (error) {
