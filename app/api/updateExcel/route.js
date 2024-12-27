@@ -1,9 +1,8 @@
 import ExcelJS from 'exceljs';
 import path from 'path';
 import fs from 'fs/promises';
-import { log } from 'console';
 
-const FILE_PATH = path.join(process.cwd(), 'data', 'reservas.xlsx');
+const FILE_PATH = path.join(__dirname, 'data', 'reservas.xlsx');
 
 export async function POST(req) {
     try {
