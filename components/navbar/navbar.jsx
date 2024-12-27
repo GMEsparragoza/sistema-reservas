@@ -4,11 +4,13 @@ import React from 'react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { PageUse } from '@/utils/Context'
+import { downloadExcel } from './downloadExcel'
 
 import './navbar.css'
 
 export default function Navbar() {
   const [emailOpen, setEmailOpen] = useState(false);
+  const [excelData, setExcelData] = useState(false);
   const [newEmail, setNewEmail] = useState('');
   const [formVerifyCode, setFormVerifyCode] = useState("");
   const [toggleBut, setToggleBut] = useState(false);
@@ -51,6 +53,14 @@ export default function Navbar() {
     setEmailOpen(!emailOpen);
   }
 
+  const HandleExcelData = async () => {
+    if(!excelData){
+      await downloadExcel();
+      setSuccess("Excel descargado con exito");
+    }
+    setExcelData(!excelData);
+  }
+
   return (
     <>
       <div className={`${emailOpen ? "emailSection" : "vanish"}`}>
@@ -66,12 +76,19 @@ export default function Navbar() {
           <button className={`${toggleBut ? "changeEmail" : "vanish"}`} onClick={() => modEmail()}>Actualizar Email</button>
         </div>
       </div>
+      <div className={`${excelData ? "emailSection" : "vanish"}`}>
+        <div className="emailBox">
+          {success && <p style={{ color: "green" }}>{success}</p>}
+          <button className={`${toggleBut ? "vanish" : "changeEmail"}`} onClick={async () => await HandleExcelData()}>Aceptar</button>
+        </div>
+      </div>
       <nav className="navbar">
         <img src="/DomeBusinessPlaza.png" alt="Dome" className="logo" />
         <div className="nav">
           <Link className="link" href={"/"}>Inicio</Link>
           <Link className="link" href={"/reservations"}>Reservar</Link>
           <button className="emailButton" onClick={() => HandleEmailButton()}>Email</button>
+          <button className="emailButton" onClick={async () => await HandleExcelData()}>Descargar Excel</button>
         </div>
       </nav>
     </>

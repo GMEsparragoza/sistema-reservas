@@ -10,7 +10,7 @@
 
 .nav {
     width: 70%;
-    max-width: 400px;
+    max-width: 500px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -102,7 +102,6 @@
     cursor: not-allowed;
     /* Cursor no permitido */
 }
-
 
 .emailSection {
     position: fixed;
