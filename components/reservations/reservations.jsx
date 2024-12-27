@@ -37,9 +37,10 @@ export const Reservations = () => {
                     reservations.push({
                         id: doc.id,
                         room: data.room,
-                        title: data.title,
+                        description: data.description,
+                        uf: data.uf,
                         date: `${timestamp.getUTCDate().toString().padStart(2, '0')}-${(timestamp.getUTCMonth() + 1).toString().padStart(2, '0')}-${timestamp.getUTCFullYear()}`,
-                        time: `${timestamp.getUTCHours().toString().padStart(2, '0')}:00`
+                        time: `${timestamp.getUTCHours().toString().padStart(2, '0')}:${(timestamp.getMinutes() == 0) ? "00" : "30"}`
                     });
                 });
                 setMeetings(reservations);
@@ -63,11 +64,12 @@ export const Reservations = () => {
                     <ul className="list">
                         {meetings.map((meeting, id) => (
                             <li key={id} className="card">
-                                <h2 className="meetingTitle">{meeting.title}</h2>
+                                <h2 className="meetingTitle">{meeting.description}</h2>
                                 <p className="meetingInfo">
                                     <b>Fecha:</b> {meeting.date}<br />
                                     <b>Hora:</b> {meeting.time} <br />
-                                    <b>Sala:</b> {meeting.room}
+                                    <b>Sala:</b> {meeting.room} <br />
+                                    <b>Unidad Funcional:</b> {meeting.uf} 
                                 </p>
                             </li>
                         ))}

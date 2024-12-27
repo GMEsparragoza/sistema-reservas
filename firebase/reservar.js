@@ -1,7 +1,7 @@
 import { addDoc, collection, Timestamp } from "firebase/firestore"
 import { firestore } from "@/firebase/config";
 
-export const guardarReserva = async (title, hour, date, room) => {
+export const guardarReserva = async (description, hour, date, room, uf, importe) => {
     // Paso 1: Dividir la fecha en día, mes y año (Formato inicial: DD-MM-YYYY)
     const [day, month, year] = date.split("-");
 
@@ -31,9 +31,11 @@ export const guardarReserva = async (title, hour, date, room) => {
 
     // Paso 9: Preparar el objeto formData con los datos necesarios
     const formData = {
-        room,
-        title,
+        description,
         date: timestamp,
+        room,
+        uf: uf,
+        importe: importe,
     };
 
     // Paso 10: Insertar los datos en Firestore
