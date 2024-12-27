@@ -2,7 +2,7 @@ import ExcelJS from 'exceljs';
 import path from 'path';
 import fs from 'fs/promises';
 
-const FILE_PATH = path.join(__dirname,'..','..', '..', '..', '..', 'data', 'reservas.xlsx'); 
+const TEMP_FILE_PATH = '/tmp/reservas.xlsx';
 
 export async function POST(req) {
     try {
@@ -10,7 +10,7 @@ export async function POST(req) {
 
         // Verificar si el archivo Excel existe
         const fileExists = await fs
-            .access(FILE_PATH)
+            .access(TEMP_FILE_PATH)
             .then(() => true)
             .catch(() => false);
 
@@ -18,7 +18,7 @@ export async function POST(req) {
 
         if (fileExists) {
             // Leer el archivo Excel existente
-            await workbook.xlsx.readFile(FILE_PATH);
+            await workbook.xlsx.readFile(TEMP_FILE_PATH);
         } else {
             // Crear un nuevo archivo si no existe
             const worksheet = workbook.addWorksheet('Reservas');
@@ -38,7 +38,7 @@ export async function POST(req) {
         data.forEach((row) => worksheet.addRow(row));
 
         // Guardar los cambios en el archivo Excel
-        await workbook.xlsx.writeFile(FILE_PATH);
+        await workbook.xlsx.writeFile(TEMP_FILE_PATH);
 
         return new Response(
             JSON.stringify({ message: 'Datos actualizados exitosamente.' }),
@@ -60,7 +60,7 @@ export async function DELETE(req) {
 
         // Verificar si el archivo Excel existe
         const fileExists = await fs
-            .access(FILE_PATH)
+            .access(TEMP_FILE_PATH)
             .then(() => true)
             .catch(() => false);
 
@@ -74,7 +74,7 @@ export async function DELETE(req) {
         const workbook = new ExcelJS.Workbook();
 
         // Leer el archivo Excel existente
-        await workbook.xlsx.readFile(FILE_PATH);
+        await workbook.xlsx.readFile(TEMP_FILE_PATH);
         const worksheet = workbook.getWorksheet('Reservas');
 
         if (!worksheet) {
@@ -108,7 +108,7 @@ export async function DELETE(req) {
         }
 
         // Guardar los cambios en el archivo Excel
-        await workbook.xlsx.writeFile(FILE_PATH);
+        await workbook.xlsx.writeFile(TEMP_FILE_PATH);
 
         return new Response(
             JSON.stringify({ message: 'Reserva eliminada exitosamente.' }),
@@ -126,7 +126,7 @@ export async function DELETE(req) {
 export async function GET() {
     try {
         const fileExists = await fs
-            .access(FILE_PATH)
+            .access(TEMP_FILE_PATH)
             .then(() => true)
             .catch(() => false);
 
@@ -134,7 +134,7 @@ export async function GET() {
             return new Response('Archivo no encontrado.', { status: 404 });
         }
 
-        const fileBuffer = await fs.readFile(FILE_PATH);
+        const fileBuffer = await fs.readFile(TEMP_FILE_PATH);
 
         return new Response(fileBuffer, {
             headers: {
