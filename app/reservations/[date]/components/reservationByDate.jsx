@@ -123,7 +123,7 @@ export default function ReservationByDate({ date }) {
             const [reservedH, reservedM] = reservedHour.split(":").map(Number);
             const [currentH, currentM] = hour.split(":").map(Number);
             const timeDifference = (currentH - reservedH) * 60 + (currentM - reservedM);
-            return timeDifference > 0 && timeDifference <= 60;
+            return timeDifference > -90 && timeDifference <= 60;
         });
 
         const [day, month, year] = date.split("-");
