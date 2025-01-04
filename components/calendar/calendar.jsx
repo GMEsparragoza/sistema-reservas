@@ -11,6 +11,9 @@ export default function Calendar() {
 
   const [monthShowed, setMonthShowed] = useState(today.getMonth() + 1);
   const [yearShowed, setYearShowed] = useState(today.getFullYear());
+  const [showMenu, setShowMenu] = useState(false);
+  const [menuDay, setMenuDay] = useState(0);
+  const [dayReservations, setDayReservations] = useState([]);
 
   const getHrefByDayAndMonth = (day, month) => {
 
@@ -20,7 +23,8 @@ export default function Calendar() {
     return `/reservations/${dayString}-${monthString}-${yearShowed}`;
   }
 
-  const [reservationDays, setReservationDays] = useState(getDaysWithReservations(monthShowed, yearShowed));
+  const [reservationDays, setReservationDays] = useState([]);
+  const [dataReservations, setDataReservations] = useState([]);
 
   const HandleMonthChange = (plus) => {
     if (plus) {
@@ -43,17 +47,38 @@ export default function Calendar() {
 
   useEffect(() => {
     const UpdateReservations = async () => {
-      setReservationDays(await getDaysWithReservations(monthShowed, yearShowed));
+      const calendar = await getDaysWithReservations(monthShowed, yearShowed);
+      console.log(calendar);
+
+      setReservationDays(calendar[0]);
+      setDataReservations(calendar[1]);
     }
     UpdateReservations();
   }, [monthShowed]);
 
+  const handleMenu = (day) => {
+    setShowMenu(true);
+    setMenuDay(day);
+
+    const arrayDay = day - 1;
+    const dataDayReservations = dataReservations[arrayDay];
+    let newDayReservations = [];
+
+    dataDayReservations.map((reservation, index) => (
+      newDayReservations.push(<React.Fragment key={`day-${day}-index-${index}`}>
+        <p className="dato">{reservation.hour}</p>
+        <p className="dato">{reservation.room}</p>
+        <p className="dato">{reservation.uf}</p>
+      </React.Fragment>)
+    ));
+    setDayReservations(newDayReservations)
+
+  }
+
   const totalDays = (new Date(yearShowed, monthShowed, 0)).getDate() - 1;
   const dayOne = (new Date(yearShowed, monthShowed - 1, 1)).getDay();
 
-
-
-  let days = []
+  let days = [];
 
   for (let i = 0; i <= 41; i++) {
     if (i < dayOne || i > totalDays + dayOne) {
@@ -61,7 +86,7 @@ export default function Calendar() {
     }
     else {
       if (reservationDays[i - dayOne] > 0) {
-        days.push(<Link href={getHrefByDayAndMonth(i - dayOne + 1, monthShowed)} className="day able" key={i}>{i - dayOne + 1} <i className={`bx bxs-circle ${(reservationDays[i - dayOne] === 1) ? "black" : "red"}`}></i></Link>)
+        days.push(<Link href={getHrefByDayAndMonth(i - dayOne + 1, monthShowed)} className="day able" key={i} onMouseEnter={() => handleMenu(i - dayOne + 1)} onMouseLeave={() => setShowMenu(false)}>{i - dayOne + 1} <i className={`bx bxs-circle ${(reservationDays[i - dayOne] === 1) ? "black" : "red"}`}></i></Link>)
       }
       else {
         days.push(<Link href={getHrefByDayAndMonth(i - dayOne + 1, monthShowed)} className="day able" key={i}>{i - dayOne + 1}</Link>)
@@ -73,6 +98,17 @@ export default function Calendar() {
     <>
       <div className="calendarMain">
         <h1 className="calendarTitle">Calendario - {yearShowed} - {(new Date(yearShowed, monthShowed - 1, 1)).toLocaleDateString("es-ES", { month: "long" }).charAt(0).toUpperCase() + (new Date(yearShowed, monthShowed - 1, 1)).toLocaleDateString("es-ES", { month: "long" }).slice(1)}</h1>
+        <div className={`${showMenu ? "menuReservas" : "vanish"}`}>
+          <p className="tituloMenu">Day {menuDay}</p>
+          <div className="datosMenu">
+            <p className="datos">Hora</p>
+            <p className="datos">Room</p>
+            <p className="datos">UF</p>
+          </div>
+          <div className="ReservasMenu" key="reservitasphite">
+            {dayReservations}
+          </div>
+        </div>
         <div className="calendarContainer">
           <i className="bx bx-chevron-left arrow" onClick={() => HandleMonthChange(false)}></i>
           <ul className='calendar' key="calendar">

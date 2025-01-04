@@ -1,8 +1,9 @@
 // app/api/sendConfirmationEmail/route.js
 import nodemailer from 'nodemailer';
+import { EMAIL_USER, EMAIL_PASS } from '@/utils/config';
 
-const email = process.env.EMAIL_USER;  // Tu correo de usuario
-const pass = process.env.EMAIL_PASS;
+const email = EMAIL_USER  // Tu correo de usuario
+const pass = EMAIL_PASS;
 
 export async function POST(req) {
     const { to, subject, html } = await req.json(); // Se recibe el correo, el asunto y el HTML del cuerpo del correo
@@ -21,7 +22,7 @@ export async function POST(req) {
     try {
         // Enviar el correo
         await transporter.sendMail({
-            from: process.env.EMAIL_USER, // El correo desde el cual se enviará
+            from: email, // El correo desde el cual se enviará
             to, // El correo al que se enviará
             subject, // El asunto del correo
             html, // El cuerpo del correo en formato HTML

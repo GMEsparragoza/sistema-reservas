@@ -1,14 +1,13 @@
-
-
 .calendarContainer {
-    width: 60%; /* Mantener el tamaño inicial */
+    width: 60%;
+    /* Mantener el tamaño inicial */
     margin: auto;
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
 
-.calendarMain{
+.calendarMain {
     border-radius: 15px;
     width: 80%;
     margin: 0 auto;
@@ -17,10 +16,13 @@
 
 .calendar {
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* Mantener siempre 7 columnas */
+    grid-template-columns: repeat(7, 1fr);
+    /* Mantener siempre 7 columnas */
     width: 100%;
-    max-width: 630px; /* Tamaño máximo para pantallas grandes */
-    grid-template-rows: 50px repeat(6, 80px); /* Mantener proporciones */
+    max-width: 630px;
+    /* Tamaño máximo para pantallas grandes */
+    grid-template-rows: 50px repeat(6, 80px);
+    /* Mantener proporciones */
     border: solid 1px black;
     border-radius: 5px;
     background-color: #fff;
@@ -75,42 +77,50 @@
 /* Ajustes para dispositivos grandes intermedios */
 @media (max-width: 1050px) {
     .calendarContainer {
-        width: 70%; /* Reducir ligeramente el ancho del contenedor */
+        width: 70%;
+        /* Reducir ligeramente el ancho del contenedor */
     }
 
     .calendar {
-        max-width: 550px; /* Ajustar tamaño máximo del calendario */
+        max-width: 550px;
+        /* Ajustar tamaño máximo del calendario */
     }
 
     .day {
-        font-size: 1.5rem; /* Reducir tamaño de fuente */
-        padding: 8px; /* Reducir padding */
+        font-size: 1.5rem;
+        /* Reducir tamaño de fuente */
+        padding: 8px;
+        /* Reducir padding */
     }
 
     .arrow {
-        font-size: 2.8rem; /* Reducir tamaño de las flechas */
+        font-size: 2.8rem;
+        /* Reducir tamaño de las flechas */
     }
 }
 
 /* Ajustes para dispositivos medianos */
 @media (max-width: 768px) {
     .calendarContainer {
-        width: 80%; /* Ajustar contenedor */
+        width: 80%;
+        /* Ajustar contenedor */
     }
 
-    .calendarMain
-
-    .calendar {
-        max-width: 500px; /* Reducir tamaño máximo del calendario */
+    .calendarMain .calendar {
+        max-width: 500px;
+        /* Reducir tamaño máximo del calendario */
     }
 
     .day {
-        font-size: 1.4rem; /* Reducir tamaño de fuente */
-        padding: 8px; /* Reducir padding */
+        font-size: 1.4rem;
+        /* Reducir tamaño de fuente */
+        padding: 8px;
+        /* Reducir padding */
     }
 
     .arrow {
-        font-size: 2.5rem; /* Reducir tamaño de flechas */
+        font-size: 2.5rem;
+        /* Reducir tamaño de flechas */
     }
 
     .arrow:hover {
@@ -122,20 +132,24 @@
 /* Ajustes para dispositivos pequeños */
 @media (max-width: 480px) {
     .calendarContainer {
-        width: 95%; /* Hacer que el contenedor ocupe casi todo el ancho */
+        width: 95%;
+        /* Hacer que el contenedor ocupe casi todo el ancho */
     }
 
-    .calendarMain{
+    .calendarMain {
         width: 95%;
     }
 
     .calendar {
-        max-width: 100%; /* Permitir que se ajuste completamente */
-        grid-template-rows: 50px repeat(6, 60px); /* Mantener proporciones */
+        max-width: 100%;
+        /* Permitir que se ajuste completamente */
+        grid-template-rows: 50px repeat(6, 60px);
+        /* Mantener proporciones */
     }
 
     .day {
-        font-size: 1.2rem; /* Reducir tamaño de fuente */
+        font-size: 1.2rem;
+        /* Reducir tamaño de fuente */
         padding: 5px;
     }
 
@@ -144,10 +158,59 @@
     }
 
     .arrow {
-        font-size: 2rem; /* Reducir tamaño de flechas */
+        font-size: 2rem;
+        /* Reducir tamaño de flechas */
     }
 
     .arrow:hover {
         transform: scale(1.0);
     }
+}
+
+.menuReservas {
+    position: absolute;
+    right: 10px;
+    background-color: #222;
+    border-radius: 10px;
+    color: #e1e1e1;
+    min-width: 20%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px;
+}
+
+.tituloMenu {
+    margin: auto;
+    font-size: 25px;
+    font-weight: 700;
+    color: #3a6cbc;
+}
+
+.datosMenu {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    border-bottom: 1px solid #3a6cbc;
+}
+
+.datosMenu .datos{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.ReservasMenu {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.reservas {
+    text-align: center; /* Centrar el texto */
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.dato{
+    text-align: center;
 }
