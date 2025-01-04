@@ -57,7 +57,7 @@ export default function Calendar() {
 
   for (let i = 0; i <= 41; i++) {
     if (i < dayOne || i > totalDays + dayOne) {
-      days.push(<div className="day"></div>)
+      days.push(<div className="day" key={i}></div>)
     }
     else {
       if (reservationDays[i - dayOne] > 0) {

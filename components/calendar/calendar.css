@@ -55,13 +55,13 @@
 .arrow {
     font-size: 4rem;
     border-radius: 50%;
-    color: #002396;
+    color: #3a6cbc;
+    background-color: #222;
 }
 
 .arrow:hover {
     cursor: pointer;
     transform: scale(1.1);
-    background-color: #222;
 }
 
 .red {

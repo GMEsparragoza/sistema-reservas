@@ -2,7 +2,11 @@
     font-size: 2rem;
     text-align: center;
     margin: 6.5vh auto 3vh auto;
-    color: #002396;
+    color: #e1e1e1;
+    background-color: #222;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 

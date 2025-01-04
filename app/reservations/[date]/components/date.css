@@ -49,8 +49,8 @@
     font-size: 0.9rem;
     font-weight: 600;
     color: #fff;
-    background-color: #2a2a2a;
-    border: 2px solid #2a2a2a;
+    background-color: #3b3b3b;
+    border: 2px solid #3b3b3b;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -69,9 +69,9 @@
 
 /* Clase para botones reservados */
 .room-button.reserved {
-    background-color: #142642;
+    background-color: #274980;
     /* Azul oscuro */
-    border-color: #142642;
+    border-color: #274980;
     color: white;
     cursor: pointer;
 }

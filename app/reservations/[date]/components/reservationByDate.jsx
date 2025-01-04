@@ -100,7 +100,7 @@ export default function ReservationByDate({ date }) {
                     };
                 });
                 console.log(reservas);
-                
+
                 setReservations(reservas);
                 setLoading(false);
             } catch (err) {
@@ -194,7 +194,9 @@ export default function ReservationByDate({ date }) {
                 {error && <p style={{ color: "red" }}>{error}</p>}
                 {loading && <p style={{ color: "white" }}>Cargando reservas...</p>}
                 <div className="hours-container">
-                    {Array.from({ length: 48 }).map((_, index) => {
+                    {Array.from({ length: 34 }).map((_, actualIndex) => {
+                        const startingIndex = 14; // Índice inicial
+                        const index = startingIndex + actualIndex;
                         const hour = `${Math.floor(index / 2).toString().padStart(2, '0')}:${index % 2 === 0 ? "00" : "30"}`;
                         const room1ButtonClass = roomButtonClass(hour, "1");
                         const room2ButtonClass = roomButtonClass(hour, "2");
@@ -236,35 +238,38 @@ export default function ReservationByDate({ date }) {
                                     >
                                         Rooftop
                                     </button>
-                                    ) : ("")}
-                                    <button
-                                        className={`room-button ${room1ButtonClass}`}
-                                        disabled={room1ButtonClass == "expired"}
-                                        onClick={() => {
-                                            if (room1ButtonClass === "reserved") {
-                                                const reservation = reservations.find(res => res.hour === hour && res.room === "1");
-                                                HandleFormDelete(hour, "1", reservation.description, reservation.uf);
-                                            } else {
-                                                HandleFormReserva(hour, "1");
-                                            }
-                                        }}
-                                    >
-                                        Sala 1
-                                    </button>
-                                    <button
-                                        className={`room-button ${room2ButtonClass}`}
-                                        disabled={room2ButtonClass == 'expired'}
-                                        onClick={() => {
-                                            if (room2ButtonClass === "reserved") {
-                                                const reservation = reservations.find(res => res.hour === hour && res.room === "2");
-                                                HandleFormDelete(hour, "2", reservation.description, reservation.uf);
-                                            } else {
-                                                HandleFormReserva(hour, "2");
-                                            }
-                                        }}
-                                    >
-                                        Sala 2
-                                    </button>
+                                    ) : (
+                                        <>
+                                            <button
+                                                className={`room-button ${room1ButtonClass}`}
+                                                disabled={room1ButtonClass == "expired"}
+                                                onClick={() => {
+                                                    if (room1ButtonClass === "reserved") {
+                                                        const reservation = reservations.find(res => res.hour === hour && res.room === "1");
+                                                        HandleFormDelete(hour, "1", reservation.description, reservation.uf);
+                                                    } else {
+                                                        HandleFormReserva(hour, "1");
+                                                    }
+                                                }}
+                                            >
+                                                Sala 1
+                                            </button>
+                                            <button
+                                                className={`room-button ${room2ButtonClass}`}
+                                                disabled={room2ButtonClass == 'expired'}
+                                                onClick={() => {
+                                                    if (room2ButtonClass === "reserved") {
+                                                        const reservation = reservations.find(res => res.hour === hour && res.room === "2");
+                                                        HandleFormDelete(hour, "2", reservation.description, reservation.uf);
+                                                    } else {
+                                                        HandleFormReserva(hour, "2");
+                                                    }
+                                                }}
+                                            >
+                                                Sala 2
+                                            </button>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         );
