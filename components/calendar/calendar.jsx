@@ -102,7 +102,7 @@ export default function Calendar() {
           <p className="tituloMenu">Day {menuDay}</p>
           <div className="datosMenu">
             <p className="datos">Hora</p>
-            <p className="datos">Room</p>
+            <p className="datos">Sala</p>
             <p className="datos">UF</p>
           </div>
           <div className="ReservasMenu" key="reservitasphite">

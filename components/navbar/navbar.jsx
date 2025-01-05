@@ -22,20 +22,20 @@ export default function Navbar() {
   const validateEmail = async () => {
     setSuccess("");
     setVerificationCode(0);
-    
+
     const code = await verifyEmail(newEmail);
     if (code) {
-        setVerificationCode(code); // Actualizar el estado para referencia futura si es necesario
-        setToggleBut(true);
-        setSuccess("Mail de verificación enviado");
+      setVerificationCode(code); // Actualizar el estado para referencia futura si es necesario
+      setToggleBut(true);
+      setSuccess("Mail de verificación enviado");
     }
   }
 
   const modEmail = async () => {
     setMessage("");
     setSuccess("");
-    
-    if (formVerifyCode != verificationCode){
+
+    if (formVerifyCode != verificationCode) {
       setMessage("El codigo de verificacion no es correcto");
       return;
     }
@@ -54,7 +54,7 @@ export default function Navbar() {
   }
 
   const HandleExcelData = async () => {
-    if(!excelData){
+    if (!excelData) {
       await handleDownload();
       setSuccess("Excel descargado con exito");
     }
@@ -79,7 +79,10 @@ export default function Navbar() {
       <div className={`${excelData ? "emailSection" : "vanish"}`}>
         <div className="emailBox">
           {success && <p style={{ color: "green" }}>{success}</p>}
-          <button className={`${toggleBut ? "vanish" : "changeEmail"}`} onClick={async () => await HandleExcelData()}>Aceptar</button>
+          <button className={`${toggleBut ? "vanish" : "changeEmail"}`} onClick={async () => {
+            await HandleExcelData(),
+            setSuccess("");
+          }}>Aceptar</button>
         </div>
       </div>
       <nav className="navbar">

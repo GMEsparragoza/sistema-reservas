@@ -1,7 +1,7 @@
 import ExcelJS from 'exceljs';
 import { getReservations } from '@/firebase/getReservas';
 
-export async function GET(req) {
+export async function GET() {
     try {
         // Crear un nuevo libro de trabajo de Excel
         const workbook = new ExcelJS.Workbook();
@@ -20,6 +20,27 @@ export async function GET(req) {
         const reservas = await getReservations();
 
         reservas.forEach((reserva) => worksheet.addRow(reserva));
+
+        // Calcular el importe total por cada sala
+        const totals = reservas.reduce((acc, reserva) => {
+            if (!acc[reserva.room]) {
+                acc[reserva.room] = 0;
+            }
+            acc[reserva.room] += reserva.importe;
+            return acc;
+        }, {});
+
+        // Agregar filas vacías como separadores
+        worksheet.addRow([]);
+        worksheet.addRow([]);
+
+        // Agregar los totales por cada sala
+        Object.entries(totals).forEach(([room, total]) => {
+            worksheet.addRow({
+                uf: `Total para Sala ${room}`,
+                importe: total
+            });
+        });
 
         // Generar el archivo Excel en memoria
         const buffer = await workbook.xlsx.writeBuffer();

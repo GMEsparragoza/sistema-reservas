@@ -1,18 +1,19 @@
 import { firestore } from "./config";
-import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
+import { collection, query, where, orderBy, getDocs, Timestamp } from "firebase/firestore";
 
 export const getReservations = async () => {
     const reservations = [];
 
     const now = new Date();
     now.setHours(now.getHours() - 3); // Resta 3 horas para ajustarlo a UTC-3
+    const nowTimestamp = Timestamp.fromDate(now); // Si 'now' es un objeto Date
 
     try {
         // Consulta las reservas con fecha >= ahora, ordenadas por fecha ascendente
         const reservationsQuery = query(
             collection(firestore, "reservas"),
-            where("date", ">=", now),
-            orderBy("date", "asc") // Ordenar por fecha ascendente
+            where("date", ">=", nowTimestamp), // Asegúrate de que 'now' es un Timestamp
+            orderBy("date", "desc") // Ordenar por fecha descendente
         );
 
         const reservationsSnap = await getDocs(reservationsQuery);

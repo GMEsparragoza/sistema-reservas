@@ -56,7 +56,7 @@ export const Reservations = () => {
 
     return (
         <>
-            {loading && <p style={{ color: "black" }}><i className='bx bx-loader-alt bx-spin' ></i> Guardando Reserva...</p>}
+            {loading && <p style={{ color: "black" }}><i className='bx bx-loader-alt bx-spin' ></i>Cargando Reservas...</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}
             <div className="container">
                 <h1 className="title">Próximas Reuniones</h1>
