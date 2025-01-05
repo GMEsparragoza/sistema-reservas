@@ -125,15 +125,21 @@
     padding: 20px;
     border-radius: 5px;
     width: 400px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
 }
 
-.emailBox i {
-    margin: 0;
+.loguito {
+    margin: auto;
+    font-size: 5rem;
     cursor: pointer;
+    color: green;
 }
 
 .emailBox i:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 .inputEmail {
@@ -148,7 +154,7 @@
     padding: 10px 20px;
     /* Aumenta el espacio interno */
     display: block;
-    margin: 20px auto;
+    margin: 10px auto 0 auto;
     /* Espaciado mejorado */
     border-radius: 50px;
     /* Bordes redondeados */

@@ -71,7 +71,7 @@ const handleModifyEmail = async (date, hour, room, desc, uf, importe, email) => 
                 <li><strong>Sala:</strong> ${room}</li>
                 <li><strong>Descripción:</strong> ${desc}</li>
                 <li><strong>Unidad Funcional:</strong> ${uf}</li>
-                <li><strong>Importe:</strong> ${importe}</li>
+                <li><strong>Importe:</strong> $${importe}</li>
             </ul>
             <p style="margin-top: 20px;">Atentamente,<br><strong>Equipo de Reservas</strong></p>
         </div>

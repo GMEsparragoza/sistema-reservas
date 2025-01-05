@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { getDocs, collection, query, where } from "firebase/firestore"
 import { firestore } from '@/firebase/config';
-import { guardarReserva } from '@/firebase/reservar';
+import { guardarReserva, verificarReservasMismaUF } from '@/firebase/reservar';
 import { PageUse } from '@/utils/Context';
 import { handleSendEmail, handleDeleteEmail, handleModifyEmail } from './send-email';
 import { deleteReservation, updateReservation } from '@/firebase/manejarReservas';
@@ -18,6 +18,7 @@ export default function ReservationByDate({ date }) {
     const [formReserva, setFormReserva] = useState(false);
     const [formCancel, setFormCancel] = useState(false);
     const [formModificar, setFormModificar] = useState(false);
+    const [formConfirmarReserva, setFormConfirmarReserva] = useState(false);
     const [description, setDescription] = useState("");
     const [desc, setDesc] = useState("");
     const [unidadFuncional, setUnidadFuncional] = useState("");
@@ -50,9 +51,19 @@ export default function ReservationByDate({ date }) {
         setFormCancel(false);
     }
 
+    const handleConfirmForm = () => {
+        setFormConfirmarReserva(!formConfirmarReserva);
+        setFormReserva(false);
+    }
+
     const submitReserva = async () => {
         setLoading(true);
         setMessage("");
+        if(await verificarReservasMismaUF(formHour, date, unidadFuncional)){
+            setLoading(false);
+            handleConfirmForm();
+            return;
+        }
         await guardarReserva(description, formHour, date, formRoom, unidadFuncional, importe);
         await handleSendEmail(description, date, formHour, formRoom, unidadFuncional, importe, email);
         setLoading(false);
@@ -81,6 +92,18 @@ export default function ReservationByDate({ date }) {
         await handleModifyEmail(date, formHour, formRoom, description, unidadFuncional, importe, email);
         setLoading(false);
         setMessage("Reserva Modificada con exito");
+        setTimeout(() => {
+            window.location.reload(); // Recarga la página
+        }, 500); // 500ms = 0.5 segundos
+    }
+
+    const confirmedSubmit = async () => {
+        setLoading(true);
+        setMessage("");
+        await guardarReserva(description, formHour, date, formRoom, unidadFuncional, importe);
+        await handleSendEmail(description, date, formHour, formRoom, unidadFuncional, importe, email);
+        setLoading(false);
+        setMessage("Reserva creada con exito");
         setTimeout(() => {
             window.location.reload(); // Recarga la página
         }, 500); // 500ms = 0.5 segundos
@@ -156,7 +179,7 @@ export default function ReservationByDate({ date }) {
             <div className={`${formReserva ? "formSection no-scroll " : "vanish"}`}>
                 <div className="formBox">
                     <div className="formFather">
-                        <div className="textForm"><b>Desea reservar esta sala?</b></div>
+                        <div className="textForm textoFuerte">Desea reservar esta sala?</div>
                         <div className="textForm">Fecha: {date}</div>
                         <div className="textForm">Hora: {formHour}</div>
                         <div className="textForm">Sala: {formRoom}</div>
@@ -192,7 +215,7 @@ export default function ReservationByDate({ date }) {
             <div className={`${formCancel ? "formSection no-scroll " : "vanish"}`}>
                 <div className="formBox">
                     <div className="formFather">
-                        <div className="textForm"><b>Desea cancelar esta reserva?</b></div>
+                        <div className="textForm textoFuerte">Desea cancelar esta reserva?</div>
                         <div className="textForm">Fecha: {date}</div>
                         <div className="textForm">Hora: {formHour}</div>
                         <div className="textForm">Sala: {formRoom}</div>
@@ -211,7 +234,7 @@ export default function ReservationByDate({ date }) {
             <div className={`${formModificar ? "formSection no-scroll" : "vanish"}`}>
                 <div className="formBox">
                     <div className="formFather">
-                        <div className="textForm"><b>Desea modificar esta sala?</b></div>
+                        <div className="textForm textoFuerte">Desea modificar esta sala?</div>
                         <div className="textForm">Fecha: {date}</div>
                         <div className="textForm">Hora: {formHour}</div>
                         <div className="textForm">Sala: {formRoom}</div>
@@ -239,6 +262,43 @@ export default function ReservationByDate({ date }) {
                             <button className="submitReserva" onClick={() => modifyReserva()}>Modificar</button>
                         </div>
                         {loading && <p style={{ color: "black" }}><i className='bx bx-loader-alt bx-spin' ></i>Actualizando Reserva...</p>}
+                        {message && <p style={{ color: "green" }}>{message}</p>}
+                    </div>
+                </div>
+            </div>
+            <div className={`${formConfirmarReserva ? "formSection no-scroll " : "vanish"}`}>
+                <div className="formBox">
+                    <div className="formFather">
+                        <div className="textForm textoFuerte">Esta seguro/a que desea reservar esta Sala?</div>
+                        <div className="textForm">La Unidad Funcional ingresada ya tiene una reserva esta semana</div>
+                        <div className="textForm">Fecha: {date}</div>
+                        <div className="textForm">Hora: {formHour}</div>
+                        <div className="textForm">Sala: {formRoom}</div>
+                        <div className="textForm">Importe: ${importe}</div>
+                        <div className="textForm">Email: {email}</div>
+                        <input
+                            type="text"
+                            className="inputTitle"
+                            placeholder="Descripcion Reunion"
+                            onChange={(e) => setDescription(e.target.value)}
+                            value={description}
+                        />
+                        <input
+                            type="text"
+                            className="inputTitle"
+                            placeholder="Unidad Funcional"
+                            onChange={(e) => setUnidadFuncional(e.target.value)}
+                            value={unidadFuncional}
+                        />
+                        <div className="submitButton">
+                            <button className="submitReserva" onClick={() => {
+                                handleConfirmForm();
+                                setDescription("");
+                                setUnidadFuncional("");
+                            }}>Cancelar</button>
+                            <button className="submitReserva" onClick={() => confirmedSubmit()}>Aceptar</button>
+                        </div>
+                        {loading && <p style={{ color: "black" }}><i className='bx bx-loader-alt bx-spin' ></i> Guardando Reserva...</p>}
                         {message && <p style={{ color: "green" }}>{message}</p>}
                     </div>
                 </div>

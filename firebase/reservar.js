@@ -1,5 +1,46 @@
-import { addDoc, collection, Timestamp } from "firebase/firestore"
+import { addDoc, collection, Timestamp, query, getDocs, where } from "firebase/firestore"
 import { firestore } from "@/firebase/config";
+
+function areDatesInSameWeek(date1, date2) {
+    const getWeekNumber = (date) => {
+        const startOfYear = new Date(date.getFullYear(), 0, 1);
+        const pastDaysOfYear = Math.floor((date - startOfYear) / (24 * 60 * 60 * 1000));
+        return Math.ceil((pastDaysOfYear + startOfYear.getDay() + 1) / 7);
+    };
+
+    return getWeekNumber(date1) === getWeekNumber(date2) && date1.getFullYear() === date2.getFullYear();
+}
+
+export const verificarReservasMismaUF = async (hour, date, uf) => {
+    const [day, month, year] = date.split("-");
+    const [hours, minutes] = hour.split(":").map(Number);
+    const dateObject = new Date(year, month - 1, day, hours, minutes);
+    if (dateObject.getHours() <= 2) {
+        dateObject.setDate(dateObject.getDate() - 1);
+    }
+    dateObject.setHours(dateObject.getHours() - 3);
+
+    const range1 = new Date(year, month - 1, dateObject.getDate() - 8);
+    const range2 = new Date(year, month - 1, dateObject.getDate() + 8);
+
+    console.log(range1, range2, dateObject);
+    const reservationsSameUFQuery = query(
+        collection(firestore, "reservas"),
+        where("date", ">=", range1),
+        where("date", "<=", range2),
+        where("uf", "==", uf)
+    );
+    const reservationsSnap = await getDocs(reservationsSameUFQuery);
+    let isSameUF = false;
+    reservationsSnap.forEach(reservation => {
+        console.log(reservation.data());
+
+        if (areDatesInSameWeek(dateObject, reservation.data().date.toDate())) {
+            isSameUF = true;
+        }
+    });
+    return isSameUF;
+}
 
 export const guardarReserva = async (description, hour, date, room, uf, importe) => {
     // Paso 1: Dividir la fecha en día, mes y año (Formato inicial: DD-MM-YYYY)

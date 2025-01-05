@@ -65,11 +65,11 @@ export default function Calendar() {
     let newDayReservations = [];
 
     dataDayReservations.map((reservation, index) => (
-      newDayReservations.push(<React.Fragment key={`day-${day}-index-${index}`}>
-        <p className="dato">{reservation.hour}</p>
-        <p className="dato">{reservation.room}</p>
-        <p className="dato">{reservation.uf}</p>
-      </React.Fragment>)
+      newDayReservations.push(<>
+        <p className="dato" key={`day-${day}-${reservation.hour}-${index}-hour`}>{reservation.hour}</p>
+        <p className="dato" key={`day-${day}-${reservation.room}-${index}-room`}>{reservation.room}</p>
+        <p className="dato" key={`day-${day}-${reservation.uf}-${index}-uf`}>{reservation.uf}</p>
+      </>)
     ));
     setDayReservations(newDayReservations)
 
@@ -82,14 +82,19 @@ export default function Calendar() {
 
   for (let i = 0; i <= 41; i++) {
     if (i < dayOne || i > totalDays + dayOne) {
-      days.push(<div className="day" key={i}></div>)
+      days.push(<div className="day" key={`day-${i}`}></div>)
     }
     else {
-      if (reservationDays[i - dayOne] > 0) {
-        days.push(<Link href={getHrefByDayAndMonth(i - dayOne + 1, monthShowed)} className="day able" key={i} onMouseEnter={() => handleMenu(i - dayOne + 1)} onMouseLeave={() => setShowMenu(false)}>{i - dayOne + 1} <i className={`bx bxs-circle ${(reservationDays[i - dayOne] === 1) ? "black" : "red"}`}></i></Link>)
+      if (i % 7 === 0 || i % 7 === 6) {
+        days.push(<div className="day disable" key={i}>{i - dayOne + 1}</div>)
       }
       else {
-        days.push(<Link href={getHrefByDayAndMonth(i - dayOne + 1, monthShowed)} className="day able" key={i}>{i - dayOne + 1}</Link>)
+        if (reservationDays[i - dayOne] > 0) {
+          days.push(<Link href={getHrefByDayAndMonth(i - dayOne + 1, monthShowed)} className="day able" key={i} onMouseEnter={() => handleMenu(i - dayOne + 1)} onMouseLeave={() => setShowMenu(false)}>{i - dayOne + 1} <i className={`bx bxs-circle ${(reservationDays[i - dayOne] === 1) ? "black" : "red"}`}></i></Link>)
+        }
+        else {
+          days.push(<Link href={getHrefByDayAndMonth(i - dayOne + 1, monthShowed)} className="day able" key={i}>{i - dayOne + 1}</Link>)
+        }
       }
     }
   }

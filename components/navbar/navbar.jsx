@@ -78,7 +78,8 @@ export default function Navbar() {
       </div>
       <div className={`${excelData ? "emailSection" : "vanish"}`}>
         <div className="emailBox">
-          {success && <p style={{ color: "green" }}>{success}</p>}
+          <i className='bx bxs-check-circle loguito' ></i>
+          {success && <p style={{ color: "green", fontSize: "20px" }}>{success}</p>}
           <button className={`${toggleBut ? "vanish" : "changeEmail"}`} onClick={async () => {
             await HandleExcelData(),
             setSuccess("");
