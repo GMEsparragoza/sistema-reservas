@@ -104,7 +104,7 @@ export default function Calendar() {
       <div className="calendarMain">
         <h1 className="calendarTitle">Calendario - {yearShowed} - {(new Date(yearShowed, monthShowed - 1, 1)).toLocaleDateString("es-ES", { month: "long" }).charAt(0).toUpperCase() + (new Date(yearShowed, monthShowed - 1, 1)).toLocaleDateString("es-ES", { month: "long" }).slice(1)}</h1>
         <div className={`${showMenu ? "menuReservas" : "vanish"}`}>
-          <p className="tituloMenu">Day {menuDay}</p>
+          <p className="tituloMenu">Dia {menuDay}</p>
           <div className="datosMenu">
             <p className="datos">Hora</p>
             <p className="datos">Sala</p>

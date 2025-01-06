@@ -3,11 +3,9 @@ import { getReservations } from '@/firebase/getReservas';
 
 export async function GET() {
     try {
-        // Crear un nuevo libro de trabajo de Excel
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Reservas');
 
-        // Definir las columnas
         worksheet.columns = [
             { header: 'Fecha', key: 'date', width: 20 },
             { header: 'Hora', key: 'hour', width: 10 },
@@ -19,37 +17,50 @@ export async function GET() {
 
         const reservas = await getReservations();
 
-        reservas.forEach((reserva) => worksheet.addRow(reserva));
-
-        // Calcular el importe total por cada sala
-        const totals = reservas.reduce((acc, reserva) => {
-            if (!acc[reserva.room]) {
-                acc[reserva.room] = 0;
+        const reservasPorMes = reservas.reduce((acc, reserva) => {
+            // Extraer mes y año de la fecha en formato día-mes-año
+            const [day, month, year] = reserva.date.split('-');
+            const mesAnio = `${new Date(year, month - 1).toLocaleString('es-ES', { month: 'long' })} ${year}`;
+            if (!acc[mesAnio]) {
+                acc[mesAnio] = [];
             }
-            acc[reserva.room] += reserva.importe;
+            acc[mesAnio].push(reserva);
             return acc;
         }, {});
 
-        // Agregar filas vacías como separadores
-        worksheet.addRow([]);
-        worksheet.addRow([]);
+        for (const [mesAnio, reservasMes] of Object.entries(reservasPorMes)) {
+            worksheet.addRow([`Mes: ${mesAnio}`]);
+            worksheet.addRow([]);
 
-        // Agregar los totales por cada sala
-        Object.entries(totals).forEach(([room, total]) => {
-            worksheet.addRow({
-                uf: `Total para Sala ${room}`,
-                importe: total
+            reservasMes.forEach((reserva) => worksheet.addRow(reserva));
+
+            const totals = reservasMes.reduce((acc, reserva) => {
+                if (!acc[reserva.room]) {
+                    acc[reserva.room] = 0;
+                }
+                acc[reserva.room] += reserva.importe;
+                return acc;
+            }, {});
+
+            worksheet.addRow([]);
+
+            Object.entries(totals).forEach(([room, total]) => {
+                worksheet.addRow({
+                    uf: `Total para Sala ${room} en ${mesAnio}:`,
+                    importe: total
+                });
             });
-        });
 
-        // Generar el archivo Excel en memoria
+            worksheet.addRow([]);
+            worksheet.addRow([]);
+        }
+
         const buffer = await workbook.xlsx.writeBuffer();
 
-        // Establecer las cabeceras para forzar la descarga del archivo
         return new Response(buffer, {
             headers: {
                 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition': 'attachment; filename="reservas.xlsx"',
+                'Content-Disposition': 'attachment; filename="Reservas.xlsx"',
             },
         });
     } catch (error) {

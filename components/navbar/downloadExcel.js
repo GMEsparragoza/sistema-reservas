@@ -12,7 +12,7 @@ export const handleDownload = async () => {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'reservas.xlsx'; // Nombre del archivo
+        link.download = 'Reservas.xlsx'; // Nombre del archivo
         link.click();
         window.URL.revokeObjectURL(url); // Liberar el objeto URL
     } catch (error) {
