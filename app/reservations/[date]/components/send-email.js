@@ -1,4 +1,4 @@
-const handleSendEmail = async (description, date, hour, room, uf, importe, email) => {
+const handleSendEmail = async (description, date, hour, room, uf, importe, duration, email) => {
     const html = `
         <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
             <h2 style="color: #0056b3;">¡Confirmación de Reserva de Sala!</h2>
@@ -11,6 +11,7 @@ const handleSendEmail = async (description, date, hour, room, uf, importe, email
                 <li><strong>Descripcion:</strong> ${description}</li>
                 <li><strong>Unidad Funcional:</strong> ${uf}</li>
                 <li><strong>Importe:</strong> $${importe}</li>
+                <li><strong>Duracion:</strong> ${duration ? '60 Minutos' : '30 Minutos'}</li>
             </ul>
             <p style="margin-top: 20px;">Atentamente,<br><strong>Equipo de Reservas</strong></p>
         </div>
@@ -59,7 +60,7 @@ const handleDeleteEmail = async (date, hour, room, desc, uf, email) => {
     });
 };
 
-const handleModifyEmail = async (date, hour, room, desc, uf, importe, email) => {
+const handleModifyEmail = async (date, hour, room, desc, uf, importe, duration, email) => {
     const html = `
         <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
             <h2 style="color:rgb(0, 123, 255);">Actualización de Reserva Confirmada</h2>
@@ -72,6 +73,7 @@ const handleModifyEmail = async (date, hour, room, desc, uf, importe, email) => 
                 <li><strong>Descripción:</strong> ${desc}</li>
                 <li><strong>Unidad Funcional:</strong> ${uf}</li>
                 <li><strong>Importe:</strong> $${importe}</li>
+                <li><strong>Duracion:</strong> ${duration ? '60 Minutos' : '30 Minutos'}</li>
             </ul>
             <p style="margin-top: 20px;">Atentamente,<br><strong>Equipo de Reservas</strong></p>
         </div>

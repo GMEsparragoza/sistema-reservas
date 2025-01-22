@@ -42,7 +42,7 @@ export const verificarReservasMismaUF = async (hour, date, uf) => {
     return isSameUF;
 }
 
-export const guardarReserva = async (description, hour, date, room, uf, importe) => {
+export const guardarReserva = async (description, hour, date, room, uf, importe, duration) => {
     // Paso 1: Dividir la fecha en día, mes y año (Formato inicial: DD-MM-YYYY)
     const [day, month, year] = date.split("-");
 
@@ -76,7 +76,8 @@ export const guardarReserva = async (description, hour, date, room, uf, importe)
         date: timestamp,
         room,
         uf: uf,
-        importe: importe,
+        importe,
+        duration: duration == 'true' ? true : false
     };
 
     // Paso 10: Insertar los datos en Firestore
