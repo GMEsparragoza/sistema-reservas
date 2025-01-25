@@ -32,7 +32,7 @@ const deleteReservation = async (date, time, room) => {
     }
 }
 
-const updateReservation = async (date, time, room, description, uf, importe, duration) => {
+const updateReservation = async (date, time, room, description, uf, importe, duration, clean) => {
     const [day, month, year] = date.split("-");
     const [hours, minutes] = time.split(":").map(Number);
     const dateObject = new Date(year, month - 1, day, hours - 3, minutes);
@@ -44,7 +44,8 @@ const updateReservation = async (date, time, room, description, uf, importe, dur
         room,
         uf: uf,
         importe: importe,
-        duration: duration == 'true' ? true : false
+        duration: duration == 'true' ? true : false,
+        clean
     };
     try {
         // Crea la consulta para buscar el documento por los campos que conoces

@@ -22,7 +22,8 @@ export default function ReservationByDate({ date }) {
     const [description, setDescription] = useState("");
     const [desc, setDesc] = useState("");
     const [unidadFuncional, setUnidadFuncional] = useState("");
-    const [duration, setDuration] = useState(null);
+    const [duration, setDuration] = useState('false');
+    const [clean, setClean] = useState(false);
     const [d, setD] = useState("");
     const [uf, setUF] = useState("");
     const [importe, setImporte] = useState(0);
@@ -68,8 +69,8 @@ export default function ReservationByDate({ date }) {
             handleConfirmForm();
             return;
         }
-        await guardarReserva(description, formHour, date, formRoom, unidadFuncional, importe, duration);
-        await handleSendEmail(description, date, formHour, formRoom, unidadFuncional, importe, duration, email);
+        await guardarReserva(description, formHour, date, formRoom, unidadFuncional, importe, duration, clean);
+        await handleSendEmail(description, date, formHour, formRoom, unidadFuncional, importe, duration, clean, email);
         setLoading(false);
         setMessage("Reserva creada con exito");
         setTimeout(() => {
@@ -92,8 +93,8 @@ export default function ReservationByDate({ date }) {
     const modifyReserva = async () => {
         setLoading(true);
         setMessage("");
-        await updateReservation(date, formHour, formRoom, description, unidadFuncional, importe, duration);
-        await handleModifyEmail(date, formHour, formRoom, description, unidadFuncional, importe, duration, email);
+        await updateReservation(date, formHour, formRoom, description, unidadFuncional, importe, duration, clean);
+        await handleModifyEmail(date, formHour, formRoom, description, unidadFuncional, importe, duration, clean, email);
         setLoading(false);
         setMessage("Reserva Modificada con exito");
         setTimeout(() => {
@@ -105,8 +106,8 @@ export default function ReservationByDate({ date }) {
         e.preventDefault();
         setLoading(true);
         setMessage("");
-        await guardarReserva(description, formHour, date, formRoom, unidadFuncional, importe, duration);
-        await handleSendEmail(description, date, formHour, formRoom, unidadFuncional, importe, duration, email);
+        await guardarReserva(description, formHour, date, formRoom, unidadFuncional, importe, duration, clean);
+        await handleSendEmail(description, date, formHour, formRoom, unidadFuncional, importe, duration, clean, email);
         setLoading(false);
         setMessage("Reserva creada con exito");
         setTimeout(() => {
@@ -161,15 +162,20 @@ export default function ReservationByDate({ date }) {
 
     const roomButtonClass = (hour, room) => {
         const reservedHours = reservations.filter(res => res.room === room).map(res => res.hour);
-
         const reservedDuration = reservations.filter(res => res.room === room).map(res => res.duration)
+        const reservedClean = reservations.filter(res => res.room === room).map(res => res.clean)
 
         const isReserved = reservedHours.some(reservedHour => reservedHour === hour);
         const isWithinRange = reservedHours.some((reservedHour, index) => {
             const [reservedH, reservedM] = reservedHour.split(":").map(Number);
             const [currentH, currentM] = hour.split(":").map(Number);
             const timeDifference = (currentH - reservedH) * 60 + (currentM - reservedM);
-            return reservedDuration[index] ? (timeDifference > 0 && timeDifference <= 30) : (timeDifference > 0 && timeDifference <= 0);
+            if(reservedClean[index]){
+                return timeDifference >= 0 && timeDifference < (reservedDuration[index] ? 90 : 60);
+            }
+            else{
+                return timeDifference >= 0 && timeDifference < (reservedDuration[index] ? 60 : 30);
+            }
         });
 
         const [day, month, year] = date.split("-");
@@ -210,9 +216,18 @@ export default function ReservationByDate({ date }) {
                         />
                         {formRoom === "Rooftop" ? null : (<select className="inputTitle" onChange={(e) => setDuration(e.target.value)} required>
                             <option defaultChecked disabled>Duracion</option>
-                            <option value={true}>60 Minutos</option>
                             <option value={false}>30 Minutos</option>
+                            <option value={true}>60 Minutos</option>
                         </select>)}
+                        {formRoom === "Rooftop" ? null : (<div className='divClean'>
+                            <label htmlFor="Clean">Agregar Limpieza</label>
+                            <input
+                                type="checkbox"
+                                id='Clean'
+                                onChange={() => setClean(!clean)}
+                                value={clean}
+                            />
+                        </div>)}
                         <div className="submitButton">
                             <button className="submitReserva" onClick={() => {
                                 HandleFormReserva("", "");
@@ -236,7 +251,7 @@ export default function ReservationByDate({ date }) {
                         <div className="textForm">Sala: {formRoom}</div>
                         <div className="textForm">Description: {desc}</div>
                         <div className="textForm">Unidad Funcional: {uf}</div>
-                        <div className="textForm">Duracion: {d}</div>
+                        {formRoom === "Rooftop" ? null : (<div className="textForm">Duracion: {d}</div>)}
                         <div className="submitButton">
                             <button className="submitReserva" onClick={() => HandleFormDelete("", "")}>Cancelar</button>
                             <button className="submitReserva" onClick={() => handleFormModify()}>Modificar</button>
@@ -269,11 +284,20 @@ export default function ReservationByDate({ date }) {
                             onChange={(e) => setUnidadFuncional(e.target.value)}
                             value={unidadFuncional}
                         />
-                        <select className="inputTitle" onChange={(e) => setDuration(e.target.value)} required>
-                            <option defaultChecked>Duracion</option>
-                            <option value={true}>60 Minutos</option>
+                        {formRoom === "Rooftop" ? null : (<select className="inputTitle" onChange={(e) => setDuration(e.target.value)} required>
+                            <option defaultChecked disabled>Duracion</option>
                             <option value={false}>30 Minutos</option>
-                        </select>
+                            <option value={true}>60 Minutos</option>
+                        </select>)}
+                        {formRoom === "Rooftop" ? null : (<div className='divClean'>
+                            <label htmlFor="Clean">Agregar Limpieza</label>
+                            <input
+                                type="checkbox"
+                                id='Clean'
+                                onChange={() => setClean(!clean)}
+                                value={clean}
+                            />
+                        </div>)}
                         <div className="submitButton">
                             <button className="submitReserva" onClick={() => {
                                 handleFormModify();
@@ -297,6 +321,7 @@ export default function ReservationByDate({ date }) {
                         <div className="textForm">Sala: {formRoom}</div>
                         <div className="textForm">Importe: ${importe}</div>
                         <div className="textForm">Email: {email}</div>
+                        <div className="textForm">Con limpieza: {clean ? 'Si' : 'No'}</div>
                         <input
                             type="text"
                             className="inputTitle"
@@ -313,11 +338,11 @@ export default function ReservationByDate({ date }) {
                             onChange={(e) => setUnidadFuncional(e.target.value)}
                             value={unidadFuncional}
                         />
-                        <select className="inputTitle" onChange={(e) => setDuration(e.target.value)} required>
-                            <option defaultChecked>Duracion</option>
-                            <option value={true}>60 Minutos</option>
+                        {formRoom === "Rooftop" ? null : (<select className="inputTitle" onChange={(e) => setDuration(e.target.value)} required>
+                            <option defaultChecked disabled>Duracion</option>
                             <option value={false}>30 Minutos</option>
-                        </select>
+                            <option value={true}>60 Minutos</option>
+                        </select>)}
                         <div className="submitButton">
                             <button className="submitReserva" onClick={() => {
                                 HandleFormReserva("", "");

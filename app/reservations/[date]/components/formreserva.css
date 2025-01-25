@@ -30,7 +30,6 @@
     padding: 20px;
     border-radius: 5px;
     width: 700px;
-    height: 500px;
     align-items: center;
     display: flex;
 }
@@ -45,6 +44,24 @@
     width: calc(100% - 12px);
     font-size: 1.5rem;
     border-radius: 3px;
+}
+
+.divClean{
+    display: flex;
+    width: fit-content;
+    margin: 10px auto;
+}
+
+.divClean label{
+    margin-right: 50px;
+    font-size: 1.3rem;
+}
+
+.divClean input{
+    width: 100px;
+    padding: 5px;
+    border-radius: 3px;
+    border: solid 1px black;
 }
 
 .textForm {
