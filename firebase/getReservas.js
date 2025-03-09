@@ -18,13 +18,15 @@ export const getReservations = async () => {
             const data = doc.data();
             const timestamp = data.date.toDate();
 
+            const hourRange = data.shift === 1 ? '08:30 a 10:30' : data.shift === 2 ? '11:00 a 13:00' : data.shift === 3 ? '13:30 a 15:30' : '16:00 a 18:00'
             reservations.push({
                 room: data.room,
                 desc: data.description,
                 uf: data.uf,
+                shift: data.shift.toString(),
                 importe: data.importe,
                 date: `${timestamp.getUTCDate().toString().padStart(2, '0')}-${(timestamp.getUTCMonth() + 1).toString().padStart(2, '0')}-${timestamp.getUTCFullYear()}`,
-                hour: `${timestamp.getUTCHours().toString().padStart(2, '0')}:${(timestamp.getMinutes() == 0) ? "00" : "30"}`
+                hour: hourRange
             });
         });
     } catch (error) {

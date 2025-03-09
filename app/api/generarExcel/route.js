@@ -8,11 +8,12 @@ export async function GET() {
 
         worksheet.columns = [
             { header: 'Fecha', key: 'date', width: 20 },
-            { header: 'Hora', key: 'hour', width: 10 },
+            { header: 'Horario', key: 'hour', width: 30 },
+            { header: 'Turno', key: 'shift', width: 10 },
             { header: 'Sala', key: 'room', width: 20 },
             { header: 'Descripción', key: 'desc', width: 40 },
             { header: 'Unidad Funcional', key: 'uf', width: 40 },
-            { header: 'Importe', key: 'importe', width: 20 },
+            { header: 'Importe (+ IVA)', key: 'importe', width: 20 },
         ];
 
         const reservas = await getReservations();
