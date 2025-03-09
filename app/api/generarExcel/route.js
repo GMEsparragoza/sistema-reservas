@@ -13,7 +13,7 @@ export async function GET() {
             { header: 'Sala', key: 'room', width: 20 },
             { header: 'Descripción', key: 'desc', width: 40 },
             { header: 'Unidad Funcional', key: 'uf', width: 40 },
-            { header: 'Importe (+ IVA)', key: 'importe', width: 20 },
+            { header: 'Importe (IVA Incluido)', key: 'importe', width: 20 },
         ];
 
         const reservas = await getReservations();
