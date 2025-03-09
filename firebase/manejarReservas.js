@@ -1,16 +1,16 @@
 import { firestore } from "./config";
 import { collection, query, where, getDocs, Timestamp, deleteDoc, updateDoc } from "firebase/firestore";
 
-const deleteReservation = async (date, time, room) => {
+const deleteReservation = async (date, turno, room) => {
     const [day, month, year] = date.split("-");
-    const [hours, minutes] = time.split(":").map(Number);
-    const dateObject = new Date(year, month - 1, day, hours - 3, minutes);
+    const dateObject = new Date(year, month - 1, day, 15, 0);
     const timestamp = Timestamp.fromDate(dateObject);
     try {
         // Crea la consulta para buscar el documento por los campos que conoces
         const q = query(
             collection(firestore, "reservas"),
             where("date", "==", timestamp),
+            where("shift", "==", turno),
             where("room", "==", room) // Puedes agregar más filtros si es necesario
         );
 
@@ -32,10 +32,9 @@ const deleteReservation = async (date, time, room) => {
     }
 }
 
-const updateReservation = async (date, time, room, description, uf, importe, duration, clean) => {
+const updateReservation = async (date, turno, room, description, uf, importe) => {
     const [day, month, year] = date.split("-");
-    const [hours, minutes] = time.split(":").map(Number);
-    const dateObject = new Date(year, month - 1, day, hours - 3, minutes);
+    const dateObject = new Date(year, month - 1, day, 15, 0);
     const timestamp = Timestamp.fromDate(dateObject);
 
     const formData = {
@@ -43,15 +42,14 @@ const updateReservation = async (date, time, room, description, uf, importe, dur
         date: timestamp,
         room,
         uf: uf,
-        importe: importe,
-        duration: duration == 'true' ? true : false,
-        clean
+        importe: importe
     };
     try {
         // Crea la consulta para buscar el documento por los campos que conoces
         const q = query(
             collection(firestore, "reservas"),
             where("date", "==", timestamp),
+            where("shift", "==", turno),
             where("room", "==", room) // Puedes agregar más filtros si es necesario
         );
 

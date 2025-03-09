@@ -66,7 +66,7 @@ export default function Calendar() {
 
     dataDayReservations.map((reservation, index) => (
       newDayReservations.push(<>
-        <p className="dato" key={`day-${day}-${reservation.hour}-${index}-hour`}>{reservation.hour}</p>
+        <p className="dato" key={`day-${day}-${reservation.shift}-${index}-shift`}>{reservation.shift}</p>
         <p className="dato" key={`day-${day}-${reservation.room}-${index}-room`}>{reservation.room}</p>
         <p className="dato" key={`day-${day}-${reservation.uf}-${index}-uf`}>{reservation.uf}</p>
       </>)
@@ -106,7 +106,7 @@ export default function Calendar() {
         <div className={`${showMenu ? "menuReservas" : "vanish"}`}>
           <p className="tituloMenu">Dia {menuDay}</p>
           <div className="datosMenu">
-            <p className="datos">Hora</p>
+            <p className="datos">Turno</p>
             <p className="datos">Sala</p>
             <p className="datos">UF</p>
           </div>

@@ -7,7 +7,7 @@
 }
 
 .reservationsTitle {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin-bottom: 20px;
     text-align: center;
     margin: 6vh 0;
@@ -18,6 +18,10 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    border: 2px solid #274980;
+    padding: 10px 5px;
+    border-radius: 20px;
+    margin: 20px 0;
 }
 
 .hour-row {
@@ -31,6 +35,11 @@
     background-color: #1e1e1e;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.containerText {
+    color: #1e1e1e;
+    text-align: center;
 }
 
 .hour {

@@ -138,6 +138,10 @@
     color: green;
 }
 
+.emailBox i {
+    cursor: pointer;
+}
+
 .emailBox i:hover {
     transform: scale(1.1);
 }

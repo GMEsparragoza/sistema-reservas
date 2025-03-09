@@ -34,13 +34,15 @@ export const Reservations = () => {
                     const data = doc.data();
                     const timestamp = data.date.toDate();
 
+                    const hourRange = data.shift === 1 ? '08:30 a 10:30' : data.shift === 2 ? '11:00 a 13:00' : data.shift === 3 ? '13:30 a 15:30' : '16:00 a 18:00'
                     reservations.push({
                         id: doc.id,
                         room: data.room,
                         description: data.description,
                         uf: data.uf,
                         date: `${timestamp.getUTCDate().toString().padStart(2, '0')}-${(timestamp.getUTCMonth() + 1).toString().padStart(2, '0')}-${timestamp.getUTCFullYear()}`,
-                        time: `${timestamp.getUTCHours().toString().padStart(2, '0')}:${(timestamp.getMinutes() == 0) ? "00" : "30"}`
+                        time: hourRange,
+                        shift: data.shift
                     });
                 });
                 setMeetings(reservations);
@@ -68,6 +70,7 @@ export const Reservations = () => {
                                 <p className="meetingInfo">
                                     <b>Fecha:</b> {meeting.date}<br />
                                     <b>Hora:</b> {meeting.time} <br />
+                                    <b>Turno:</b> {meeting.shift} <br />
                                     <b>Sala:</b> {meeting.room} <br />
                                     <b>Unidad Funcional:</b> {meeting.uf} 
                                 </p>

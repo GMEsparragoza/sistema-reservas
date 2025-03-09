@@ -32,7 +32,8 @@ export const getDaysWithReservations = async (month, year) => {
         dataReservationDays[day-1].push({
             hour: (mins==0 ? `${hour}:00` : `${hour}:${mins}`),
             room: data.room,
-            uf: data.uf
+            uf: data.uf,
+            shift: data.shift
         });
 
         if (data.date.toDate() < now && reservationDays[day - 1] != 2) {
