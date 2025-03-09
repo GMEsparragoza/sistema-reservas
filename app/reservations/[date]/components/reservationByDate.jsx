@@ -369,7 +369,6 @@ export default function ReservationByDate({ date }) {
             <div className="reservation-page">
                 <h1 className="reservationsTitle">Reservas para el {date}</h1>
                 {error && <p style={{ color: "red" }}>{error}</p>}
-                {loading && <p style={{ color: "white" }}>Cargando reservas...</p>}
                 <div className="hours-container">
                     <h2 className='containerText'>Salas</h2>
                     {Array.from({ length: 4 }).map((_, actualIndex) => {
