@@ -44,7 +44,6 @@ export const getDaysWithReservations = async (month, year) => {
         }
     });
     const calendar = [reservationDays, dataReservationDays];
-    console.log(calendar);
 
     return calendar;
 }

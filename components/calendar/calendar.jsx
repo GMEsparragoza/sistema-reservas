@@ -48,7 +48,6 @@ export default function Calendar() {
   useEffect(() => {
     const UpdateReservations = async () => {
       const calendar = await getDaysWithReservations(monthShowed, yearShowed);
-      console.log(calendar);
 
       setReservationDays(calendar[0]);
       setDataReservations(calendar[1]);

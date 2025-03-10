@@ -173,7 +173,10 @@ export default function ReservationByDate({ date }) {
     }
 
     useEffect(() => {
-        const argentinaTime = DateTime.now().setZone("America/Argentina/Buenos_Aires");
+        const now = new Date();
+        now.setHours(0, 1, 0, 0); // Ajusta la hora a 23:59:00.000
+
+        const argentinaTime = now.getTime(); // Obtiene el timestamp
         setFormattedTime(argentinaTime);
 
         const fetchReservations = async () => {
@@ -204,7 +207,6 @@ export default function ReservationByDate({ date }) {
                         hour: `${timestamp.getUTCHours().toString().padStart(2, '0')}:${(timestamp.getMinutes() == 0) ? "00" : "30"}`
                     };
                 });
-                console.log(reservas)
 
                 setReservations(reservas);
                 setLoading(false);
@@ -223,7 +225,7 @@ export default function ReservationByDate({ date }) {
         const isReserved = reservedShifts.some(reservedshift => reservedshift === shift);
 
         const [day, month, year] = date.split("-");
-        const buttonDate = new Date(year, month - 1, day);
+        const buttonDate = new Date(year, month - 1, day, 15, 0);
         const isExpired = buttonDate < formattedTime;
 
         if (isReserved) return "reserved";
